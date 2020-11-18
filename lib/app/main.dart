@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'pages/game_category/game_genre_page.dart';
+import 'pages/game_genre/game_genre_page.dart';
 
 void main() => runApp(MyApp());
 
