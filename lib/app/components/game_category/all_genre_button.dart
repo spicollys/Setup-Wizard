@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AllCategoriesButton extends StatelessWidget {
+class AllGenreButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -12,10 +12,10 @@ class AllCategoriesButton extends StatelessWidget {
           elevation: 8,
           color: Colors.grey[600],
           onPressed: () =>
-              print("All Categories"), //TODO AllGamesPage Navigation
+              print("All Genres"), //TODO AllGamesPage Navigation
           child: Center(
             child: Text(
-              "All Categories",
+              "All Genres",
               style: TextStyle(
                   fontSize: 24, letterSpacing: 2, fontWeight: FontWeight.bold),
             ),

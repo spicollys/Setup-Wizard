@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'pages/game_category/game_category_page.dart';
+import 'pages/game_category/game_genre_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,6 +15,6 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.grey,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: GameCategoryPage());
+        home: GameGenrePage());
   }
 }

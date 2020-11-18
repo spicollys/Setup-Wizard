@@ -1,10 +1,10 @@
-class GameCategoryController {
-  static final GameCategoryController instance =
-      GameCategoryController._(); //singleton pattern
+class GameGenreController {
+  static final GameGenreController instance =
+      GameGenreController._(); //singleton pattern
 
-  GameCategoryController._(); //private constructor: this class just can be instanciated here
+  GameGenreController._(); //private constructor: this class just can be instanciated here
 
-  static final List<String> categoriesList = [
+  static final List<String> genreList = [
     "Indie",
     "Action",
     "Adventure",
@@ -15,10 +15,11 @@ class GameCategoryController {
     "Free To Play",
     "Sports",
     "Racing",
-    "Massively Multiplayer"
+    "Massively Multiplayer",
+    "Non-game",
   ];
 
-  filterCategory(int index) {
+  filterGenre(int index) {
     switch (index) {
       case 0:
         return isIndie();
@@ -42,6 +43,8 @@ class GameCategoryController {
         return isRacing();
       case 10:
         return isMassivelyMultiplayer();
+      case 11:
+        return isNonGame();
     }
   }
 
@@ -57,5 +60,6 @@ class GameCategoryController {
   isRacing() => print("Racing"); //Return Racing Games True
   isMassivelyMultiplayer() =>
       print("Massively Multiplayer"); //Return Massively Multiplayer Games True
+  isNonGame() => print("Non-game"); //Return Non-game True
 
 }
