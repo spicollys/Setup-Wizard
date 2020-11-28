@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:setup/app/components/game_genre/game_genre_grid.dart';
-import 'package:setup/app/components/game_genre/all_genre_button.dart';
+import 'package:setup_wizard/app/components/game_genre/game_genre_grid.dart';
+import 'package:setup_wizard/app/components/game_genre/all_genre_button.dart';
 
 
 class GameGenrePage extends StatelessWidget {

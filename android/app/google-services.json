@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "29124603396",
+    "firebase_url": "https://steam-game-data.firebaseio.com",
+    "project_id": "steam-game-data",
+    "storage_bucket": "steam-game-data.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:29124603396:android:15c218fe750019238ecf51",
+        "android_client_info": {
+          "package_name": "com.example.setup_wizard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "29124603396-56qu0jgstkqobf03r4sl1v0sg12g36f5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1Q2Sa_IXIA8pRkYKv6XGxvkYGD_yZYHg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "29124603396-56qu0jgstkqobf03r4sl1v0sg12g36f5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
