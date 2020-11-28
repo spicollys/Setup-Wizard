@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/components/game_genre/game_genre_grid.dart';
@@ -6,6 +8,7 @@ import 'package:setup_wizard/app/components/game_genre/all_genre_button.dart';
 
 class GameGenrePage extends StatelessWidget {
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
