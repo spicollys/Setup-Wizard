@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "29124603396",
-    "firebase_url": "https://steam-game-data.firebaseio.com",
-    "project_id": "steam-game-data",
-    "storage_bucket": "steam-game-data.appspot.com"
+    "project_number": "625915369971",
+    "firebase_url": "https://setup-wizard-383c4.firebaseio.com",
+    "project_id": "setup-wizard-383c4",
+    "storage_bucket": "setup-wizard-383c4.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:29124603396:android:15c218fe750019238ecf51",
+        "mobilesdk_app_id": "1:625915369971:android:6c1ab88cad7f2890e71a86",
         "android_client_info": {
           "package_name": "com.example.setup_wizard"
         }
       },
       "oauth_client": [
         {
-          "client_id": "29124603396-56qu0jgstkqobf03r4sl1v0sg12g36f5.apps.googleusercontent.com",
+          "client_id": "625915369971-9ohu42nolmed3k25sbo0jep0ts5h14s1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA1Q2Sa_IXIA8pRkYKv6XGxvkYGD_yZYHg"
+          "current_key": "AIzaSyAunZrAU-JloZGeFpxQYEl1oEhQP6SKLJU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "29124603396-56qu0jgstkqobf03r4sl1v0sg12g36f5.apps.googleusercontent.com",
+              "client_id": "625915369971-9ohu42nolmed3k25sbo0jep0ts5h14s1.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
