@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:setup_wizard/app/pages/game_genre/controller/game_genre_controller.dart';
+import 'package:setup_wizard/app/controllers/game_genre_controller.dart';
 
 class GameGenreGrid extends StatelessWidget {
   @override
