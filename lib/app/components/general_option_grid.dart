@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:setup_wizard/app/controllers/game_genre_controller.dart';
+import 'package:setup_wizard/app/interfaces/general_controller_interface.dart';
+import 'package:setup_wizard/app/models/argument.dart';
 
-class GameGenreGrid extends StatelessWidget {
+class GeneralOptionGrid extends StatelessWidget {
+  final IGeneralPageController controllerInstance;
+  GeneralOptionGrid({@required this.controllerInstance});
+
   @override
   Widget build(BuildContext context) {
     return GridView.count(
@@ -9,17 +13,21 @@ class GameGenreGrid extends StatelessWidget {
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
       crossAxisCount: 2,
-      children: List.generate(GameGenreController.genreList.length, (index) {
+      children:
+          List.generate(controllerInstance.getOptionList().length, (index) {
+        Argument _localArgument =
+            Argument(arguments: controllerInstance.filterOption(index));
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: RaisedButton(
             elevation: 8,
             color: Colors.grey[600],
-            onPressed: () => GameGenreController.instance.filterGenre(index),
+            onPressed: () => Navigator.pushNamed(context, '/gameListPage',
+                arguments: _localArgument),
             child: FittedBox(
               fit: BoxFit.fill,
               child: Text(
-                GameGenreController.genreList[index],
+                controllerInstance.getOptionList()[index],
                 style: TextStyle(
                     fontSize: 24,
                     letterSpacing: 2,
