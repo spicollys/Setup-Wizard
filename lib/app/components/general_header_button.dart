@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:setup_wizard/app/models/argument.dart';
 
-class AllGenreButton extends StatelessWidget {
+class GeneralHeaderButton extends StatelessWidget {
+  final String title;
+  GeneralHeaderButton({@required this.title});
+
   @override
   Widget build(BuildContext context) {
+    Argument _localArgument = Argument(arguments: [title, null]);
+
     return Container(
       height: MediaQuery.of(context).size.height / 5,
       width: MediaQuery.of(context).size.width,
@@ -11,11 +17,11 @@ class AllGenreButton extends StatelessWidget {
         child: RaisedButton(
           elevation: 8,
           color: Colors.grey[600],
-          onPressed: () =>
-              print("All Genres"), //TODO AllGamesPage Navigation
+          onPressed: () => Navigator.pushNamed(context, '/gameListPage',
+              arguments: _localArgument),
           child: Center(
             child: Text(
-              "All Genres",
+              title,
               style: TextStyle(
                   fontSize: 24, letterSpacing: 2, fontWeight: FontWeight.bold),
             ),
