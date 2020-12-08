@@ -1,33 +1,19 @@
 import 'package:setup_wizard/app/interfaces/user_interface.dart';
 
-class User implements IUser {
+class UserData implements IUser {
   @override
   String email;
 
   @override
   String name;
 
-  @override
-  String password;
+  UserData({this.email, this.name});
 
-  @override
-  String userId;
-
-  User();
-
-  User.fromJson(Map<String, dynamic> json)
-      : userId = json['userId'],
-        email = json['email'],
-        password = json['password'],
+  UserData.fromJson(Map<String, dynamic> json)
+      : email = json['email'],
         name = json['name'];
 
-  Map<String, dynamic> toJson() =>
-      {'userId': userId, 'email': email, 'password': password, 'name': name};
-
-  @override
-  String getUserId({userId}) {
-    return userId;
-  }
+  Map<String, dynamic> toJson() => {'email': email, 'name': name};
 
   @override
   String getName({name}) {
@@ -40,16 +26,6 @@ class User implements IUser {
   }
 
   @override
-  String getPassword({password}) {
-    return password;
-  }
-
-  @override
-  void setUserId({userId}) {
-    this.userId = userId;
-  }
-
-  @override
   void setName({name}) {
     this.name = name;
   }
@@ -57,10 +33,5 @@ class User implements IUser {
   @override
   void setEmail({email}) {
     this.email = email;
-  }
-
-  @override
-  void setPassword({password}) {
-    this.password = password;
   }
 }
