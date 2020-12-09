@@ -13,6 +13,7 @@ class UserData implements IUser {
       : email = json['email'],
         name = json['name'];
 
+  @override
   Map<String, dynamic> toJson() => {'email': email, 'name': name};
 
   @override

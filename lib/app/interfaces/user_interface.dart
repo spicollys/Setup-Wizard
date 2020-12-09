@@ -7,4 +7,6 @@ abstract class IUser {
 
   void setName({name});
   void setEmail({email});
+
+  Map toJson();
 }
