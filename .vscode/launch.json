@@ -8,7 +8,7 @@
             "name": "Setup Wizard",
             "request": "launch",
             "type": "dart",
-            "program": "lib/app/main.dart"
+            "program": "lib/main.dart"
         }
     ]
 }

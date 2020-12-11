@@ -4,7 +4,6 @@ import 'package:setup_wizard/app/pages/game_genre/game_genre_page.dart';
 import 'package:setup_wizard/app/pages/game_list/game_list_page.dart';
 import 'package:setup_wizard/app/pages/login/login_page.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

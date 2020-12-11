@@ -32,6 +32,7 @@ dependencies:
   firebase_core : ^0.5.0
   cloud_firestore: ^0.14.3+1
   form_field_validator: ^1.0.1
+  firebase_auth: ^0.18.4
 
 dev_dependencies:
   flutter_test:
@@ -46,9 +47,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - lib/app/assets/images/logo1.png
-
-
+    - lib/assets/images/logo1.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

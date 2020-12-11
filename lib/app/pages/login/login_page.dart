@@ -120,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('lib/app/assets/images/logo1.png'),
+              image: AssetImage('lib/assets/images/logo1.png'),
               scale: 1.7,
               alignment: Alignment(0, (-600 / _size.height)),
             ),
