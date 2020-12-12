@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:setup_wizard/app/components/custom_gradient_container.dart';
 import 'package:setup_wizard/app/components/custom_inkwell.dart';
 import 'package:setup_wizard/app/components/custom_submit_button.dart';
@@ -14,6 +16,31 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
+  String _email;
+  String _password;
+
+  bool _validadeAndSave() {
+    final FormState _form = _formKey.currentState;
+    if (_form.validate()) {
+      _form.save();
+      return true;
+    }
+    return false;
+  }
+
+  void _validadeAndSubmit() async {
+    try {
+      if (_validadeAndSave()) {
+        final User user = await Auth.instance.signIn(_email, _password);
+        print(user.uid);
+      }
+    } on FirebaseAuthException catch (error) {
+      print(error);
+      print(error.code);
+      print(error.message);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,9 +57,13 @@ class _LoginPageState extends State<LoginPage> {
                     TextFieldContainer(
                       child: TextFormField(
                         validator: ValidationController.instance.emailValidator,
+                        onSaved: (String email) => _email = email,
                         keyboardType: TextInputType.emailAddress,
                         style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(vertical: 11),
+                          errorStyle:
+                              TextStyle(height: 0.05, color: Colors.yellow),
                           icon: Icon(
                             Icons.person,
                             color: Colors.white,
@@ -47,10 +78,14 @@ class _LoginPageState extends State<LoginPage> {
                       child: TextFormField(
                         validator:
                             ValidationController.instance.passwordValidator,
+                        onSaved: (String password) => {_password = password},
                         obscureText: true,
                         keyboardType: TextInputType.visiblePassword,
                         style: TextStyle(color: Colors.white),
                         decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(vertical: 11),
+                          errorStyle:
+                              TextStyle(height: 0.05, color: Colors.yellow),
                           icon: Icon(
                             Icons.vpn_key,
                             color: Colors.white,
@@ -65,7 +100,8 @@ class _LoginPageState extends State<LoginPage> {
                       title: "Forgot your password?",
                       onTap: () => null,
                     ),
-                    CustomSubmitButton(title: 'login', onPressed: () => null),
+                    CustomSubmitButton(
+                        title: 'login', onPressed: _validadeAndSubmit),
                     CustomInkwell(
                       title: "Not registered? Sign Up!",
                       onTap: () => null,

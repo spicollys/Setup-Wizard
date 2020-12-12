@@ -5,10 +5,12 @@ class ValidationController {
   ValidationController._();
 
   final passwordValidator = MultiValidator([
-    RequiredValidator(errorText: 'Please enter a password.'),
+    RequiredValidator(errorText: 'Password field can not be empty.'),
     MinLengthValidator(8, errorText: 'Password must be at least 8 digits.')
   ]);
 
-  final emailValidator =
-      EmailValidator(errorText: 'Please enter a valid email address.');
+  final emailValidator = MultiValidator([
+    RequiredValidator(errorText: 'E-mail field can not be empty.'),
+    EmailValidator(errorText: 'Please enter a valid e-mail address.')
+  ]);
 }

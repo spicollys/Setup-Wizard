@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:setup_wizard/app/interfaces/user_interface.dart';
 import 'package:setup_wizard/app/models/user_data.dart';
 import 'package:setup_wizard/app/services/user_firebase_service.dart';
@@ -36,9 +37,11 @@ class Auth {
       UserCredential userCredential = await _firebaseAuth
           .signInWithEmailAndPassword(email: email.trim(), password: password);
       return userCredential.user;
-    } catch (e) {
-      print(e);
-      return null;
+    } on FirebaseAuthException catch (error) {
+      print(error);
+      print(error.code);
+      print(error.message);
+      return Future.error(error);
     }
   }
 
