@@ -3,7 +3,7 @@ import 'package:setup_wizard/app/interfaces/general_controller_interface.dart';
 import 'package:setup_wizard/app/models/argument.dart';
 
 class GeneralOptionGrid extends StatelessWidget {
-  final IGeneralPageController controllerInstance;
+  final IFilterCategoryController controllerInstance;
   GeneralOptionGrid({@required this.controllerInstance});
 
   @override
