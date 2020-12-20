@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:setup_wizard/app/components/constants.dart';
 
 class TextFieldContainer extends StatelessWidget {
   final Widget child;
@@ -18,9 +19,9 @@ class TextFieldContainer extends StatelessWidget {
         height: size.height * 0.07,
         width: size.width * 0.8,
         decoration: BoxDecoration(
-          color: Colors.blueGrey[400],
+          color: Constants.blueGrey400,
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: Colors.white, width: 2),
+          border: Border.all(color: Constants.white, width: 2),
         ),
         child: child,
       ),

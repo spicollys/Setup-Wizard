@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'constants.dart';
+
 class CustomInkwell extends StatelessWidget {
   final String title;
   final void Function() onTap;
@@ -15,7 +17,7 @@ class CustomInkwell extends StatelessWidget {
             title,
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: Colors.white,
+              color: Constants.white,
             ),
           ),
         ),

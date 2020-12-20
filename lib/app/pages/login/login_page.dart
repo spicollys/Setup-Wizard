@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:setup_wizard/app/components/custom_gradient_container.dart';
 import 'package:setup_wizard/app/components/custom_inkwell.dart';
+import 'package:setup_wizard/app/components/custom_flushbar.dart';
 import 'package:setup_wizard/app/components/custom_submit_button.dart';
 import 'package:setup_wizard/app/components/logo_setup_wizard.dart';
 import 'package:setup_wizard/app/components/text_field_container.dart';
@@ -19,30 +20,31 @@ class _LoginPageState extends State<LoginPage> {
   String _email;
   String _password;
 
-  bool _validadeAndSave() {
-    final FormState _form = _formKey.currentState;
-    if (_form.validate()) {
-      _form.save();
-      return true;
-    }
-    return false;
-  }
-
-  void _validadeAndSubmit() async {
-    try {
-      if (_validadeAndSave()) {
-        final User user = await Auth.instance.signIn(_email, _password);
-        print(user.uid);
-      }
-    } on FirebaseAuthException catch (error) {
-      print(error);
-      print(error.code);
-      print(error.message);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    bool _validadeAndSave() {
+      final FormState _form = _formKey.currentState;
+      if (_form.validate()) {
+        _form.save();
+        return true;
+      }
+      return false;
+    }
+
+    void _validadeAndSubmit() async {
+      if (_validadeAndSave()) {
+        final User user =
+            await Auth.instance.signIn(_email, _password).catchError((error) {
+          CustomFlushBar.show(
+              context: context, title: "Login error:", message: error);
+          return null;
+        });
+        if (user != null) {
+          Navigator.of(context).popAndPushNamed('/gameGenrePage');
+        }
+      }
+    }
+
     return Scaffold(
       body: SafeArea(
         child: CustomGradientContainer(

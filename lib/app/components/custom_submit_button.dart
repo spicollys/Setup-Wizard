@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'constants.dart';
+
 class CustomSubmitButton extends StatelessWidget {
   final String title;
   final void Function() onPressed;
@@ -17,15 +19,15 @@ class CustomSubmitButton extends StatelessWidget {
           child: Text(
             title.toUpperCase(),
             style: TextStyle(
-              color: Colors.white,
+              color: Constants.white,
             ),
           ),
-          color: Colors.blueGrey[600],
+          color: Constants.blueGrey600,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
               side: BorderSide(
                 width: 2,
-                color: Colors.white,
+                color: Constants.white,
               )),
         ),
       ),

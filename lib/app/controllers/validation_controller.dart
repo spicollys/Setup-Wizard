@@ -6,7 +6,7 @@ class ValidationController {
 
   final passwordValidator = MultiValidator([
     RequiredValidator(errorText: 'Password field can not be empty.'),
-    MinLengthValidator(8, errorText: 'Password must be at least 8 digits.')
+    MinLengthValidator(6, errorText: 'Password must be at least 6 digits.')
   ]);
 
   final emailValidator = MultiValidator([

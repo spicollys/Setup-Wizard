@@ -39,20 +39,13 @@ class Auth {
   }
 
   Future<User> signIn(String email, String password) async {
-    User user;
-    String errorMessage;
-    try {
-      UserCredential userCredential = await _firebaseAuth
-          .signInWithEmailAndPassword(email: email.trim(), password: password);
-      user = userCredential.user;
-    } on FirebaseAuthException catch (error) {
-      errorMessage = ErrorHandlerController.signInErrorHandling(error);
-    }
-    if (errorMessage != null) {
-      developer.log(errorMessage);
-      return Future.error(errorMessage);
-    }
-    return user;
+    UserCredential userCredential = await _firebaseAuth
+        .signInWithEmailAndPassword(email: email.trim(), password: password)
+        .then((credential) => credential)
+        .catchError((error) {
+      throw ErrorHandlerController.signInErrorHandling(error);
+    });
+    return userCredential.user;
   }
 
   void signOut() {
@@ -60,7 +53,7 @@ class Auth {
     try {
       FirebaseAuth.instance.signOut();
     } on FirebaseAuthException catch (error) {
-      errorMessage = ErrorHandlerController.singOutErrorHandling(error);
+      ErrorHandlerController.singOutErrorHandling(error);
     }
     if (errorMessage != null) {
       developer.log(errorMessage);
