@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'dart:developer' as developer;
+import 'package:logger/logger.dart';
 
 class ErrorHandlerController {
+  static final _log = Logger();
+
   static String singUpErrorHandling(FirebaseAuthException error) {
     String errorMessage;
     String errorLog;
@@ -25,7 +27,7 @@ class ErrorHandlerController {
       default:
         errorMessage = "An undefined Error happened.";
     }
-    developer.log(errorLog, time: DateTime.now());
+    _log.w("${DateTime.now()}: $errorLog", errorLog.toUpperCase());
     return errorMessage;
   }
 
@@ -53,7 +55,7 @@ class ErrorHandlerController {
       default:
         errorMessage = "An undefined Error happened.";
     }
-    developer.log(errorLog, time: DateTime.now());
+    _log.w("${DateTime.now()}: $errorLog", errorLog.toUpperCase());
     return errorMessage;
   }
 
@@ -77,6 +79,6 @@ class ErrorHandlerController {
       default:
         errorLog = "An undefined Error happened.";
     }
-    developer.log(errorLog, time: DateTime.now());
+    _log.w("${DateTime.now()}: $errorLog", errorLog.toUpperCase());
   }
 }

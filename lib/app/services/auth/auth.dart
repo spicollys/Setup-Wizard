@@ -3,7 +3,6 @@ import 'package:setup_wizard/app/controllers/error_handler_controller.dart';
 import 'package:setup_wizard/app/interfaces/user_interface.dart';
 import 'package:setup_wizard/app/models/user_data.dart';
 import 'package:setup_wizard/app/services/user_firebase_service.dart';
-import 'dart:developer' as developer;
 
 class Auth {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -14,27 +13,19 @@ class Auth {
 
   Future<User> signUp(String email, String password, String name) async {
     User fireUser;
-    String errorMessage;
-    try {
-      UserCredential userCredential =
-          await _firebaseAuth.createUserWithEmailAndPassword(
-              email: email.trim(), password: password);
+    UserCredential userCredential = await _firebaseAuth
+        .createUserWithEmailAndPassword(email: email.trim(), password: password)
+        .then((credential) => credential)
+        .catchError(
+            (error) => throw ErrorHandlerController.singUpErrorHandling(error));
 
-      fireUser = userCredential.user;
-      IUser userData = new UserData(email: email, name: name);
+    fireUser = userCredential.user;
+    IUser userData = new UserData(email: email, name: name);
 
-      await UserFirebaseService.instance
-          .put(id: fireUser.uid, value: userData.toJson());
+    await UserFirebaseService.instance
+        .put(id: fireUser.uid, value: userData.toJson());
 
-      await fireUser.sendEmailVerification();
-      return fireUser;
-    } on FirebaseAuthException catch (error) {
-      errorMessage = ErrorHandlerController.singUpErrorHandling(error);
-    }
-    if (errorMessage != null) {
-      developer.log(errorMessage);
-      return Future.error(errorMessage);
-    }
+    await fireUser.sendEmailVerification();
     return fireUser;
   }
 
@@ -42,21 +33,13 @@ class Auth {
     UserCredential userCredential = await _firebaseAuth
         .signInWithEmailAndPassword(email: email.trim(), password: password)
         .then((credential) => credential)
-        .catchError((error) {
-      throw ErrorHandlerController.signInErrorHandling(error);
-    });
+        .catchError(
+            (error) => throw ErrorHandlerController.signInErrorHandling(error));
     return userCredential.user;
   }
 
   void signOut() {
-    String errorMessage;
-    try {
-      FirebaseAuth.instance.signOut();
-    } on FirebaseAuthException catch (error) {
-      ErrorHandlerController.singOutErrorHandling(error);
-    }
-    if (errorMessage != null) {
-      developer.log(errorMessage);
-    }
+    FirebaseAuth.instance.signOut().catchError(
+        (error) => ErrorHandlerController.singOutErrorHandling(error));
   }
 }
