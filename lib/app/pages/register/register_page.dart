@@ -1,11 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'package:setup_wizard/app/components/constants.dart';
+import 'package:setup_wizard/app/components/custom_flushbar.dart';
 import 'package:setup_wizard/app/components/custom_gradient_container.dart';
 import 'package:setup_wizard/app/components/custom_submit_button.dart';
 import 'package:setup_wizard/app/components/logo_setup_wizard.dart';
 import 'package:setup_wizard/app/components/text_field_container.dart';
+import 'package:setup_wizard/app/controllers/log_controller.dart';
 import 'package:setup_wizard/app/controllers/validation_controller.dart';
+import 'package:setup_wizard/app/services/auth/auth.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -27,6 +30,22 @@ class _RegisterPageState extends State<RegisterPage> {
     return false;
   }
 
+  void _validadeAndSubmit() async {
+    if (_validadeAndSave()) {
+      final User user = await Auth.instance
+          .signUp(_email, _password, _name)
+          .catchError((error) {
+        CustomFlushBar.show(
+            context: context, title: "Register error:", message: error);
+        return null;
+      });
+      if (user != null) {
+        LogController.logInfo('Signed up with success.');
+        Navigator.of(context).popAndPushNamed('/loginPage');
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +61,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   children: [
                     TextFieldContainer(
                       child: TextFormField(
-                        validator: ValidationController.instance.textValidator,
+                        validator: ValidationController.textValidator,
                         onSaved: (String name) => _name = name,
                         style: TextStyle(color: Constants.white),
                         keyboardType: TextInputType.name,
@@ -62,7 +81,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     TextFieldContainer(
                       child: TextFormField(
-                        validator: ValidationController.instance.emailValidator,
+                        validator: ValidationController.emailValidator,
                         onSaved: (String email) => _email = email,
                         keyboardType: TextInputType.emailAddress,
                         style: TextStyle(color: Constants.white),
@@ -82,8 +101,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     TextFieldContainer(
                       child: TextFormField(
-                        validator:
-                            ValidationController.instance.passwordValidator,
+                        validator: ValidationController.passwordValidator,
                         onSaved: (String password) => _password = password,
                         onChanged: (String password) => _password = password,
                         obscureText: true,
@@ -108,7 +126,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         validator: (_passwordConfirmation) {
                           if (_passwordConfirmation.isEmpty)
                             return 'This field can not be empty.';
-                          return ValidationController.instance.matchValidator
+                          return ValidationController.matchValidator
                               .validateMatch(_password, _passwordConfirmation);
                         },
                         obscureText: true,
@@ -129,7 +147,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ),
                     CustomSubmitButton(
-                        title: 'register', onPressed: _validadeAndSave),
+                      title: 'register',
+                      onPressed: _validadeAndSubmit,
+                    ),
                   ],
                 ),
               ),

@@ -42,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
           return null;
         });
         if (user != null) {
-          LogController.logInfo('Well successed log in.');
+          LogController.logInfo('Signed in with success.');
           Navigator.of(context).popAndPushNamed('/gameGenrePage');
         }
       }
@@ -61,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     TextFieldContainer(
                       child: TextFormField(
-                        validator: ValidationController.instance.emailValidator,
+                        validator: ValidationController.emailValidator,
                         onSaved: (String email) => _email = email,
                         keyboardType: TextInputType.emailAddress,
                         style: TextStyle(color: Constants.white),
@@ -81,8 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     TextFieldContainer(
                       child: TextFormField(
-                        validator:
-                            ValidationController.instance.passwordValidator,
+                        validator: ValidationController.passwordValidator,
                         onSaved: (String password) => {_password = password},
                         obscureText: true,
                         keyboardType: TextInputType.visiblePassword,
