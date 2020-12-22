@@ -5,6 +5,8 @@ import 'package:setup_wizard/app/pages/game_list/game_list_page.dart';
 import 'package:setup_wizard/app/pages/login/login_page.dart';
 import 'package:setup_wizard/app/pages/register/register_page.dart';
 
+import 'app/pages/loading/loading_page.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -22,12 +24,13 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.grey,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        initialRoute: '/loginPage',
+        initialRoute: '/loadingPage',
         routes: {
           '/gameGenrePage': (context) => GameGenrePage(),
           '/gameListPage': (context) => GameListPage(),
           '/loginPage': (context) => LoginPage(),
           '/registerPage': (context) => RegisterPage(),
+          '/loadingPage': (context) => LoadingPage(),
         });
   }
 }
