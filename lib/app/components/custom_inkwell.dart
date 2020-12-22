@@ -12,7 +12,7 @@ class CustomInkwell extends StatelessWidget {
       margin: EdgeInsets.only(top: 4, bottom: 4),
       child: Center(
         child: InkWell(
-          onTap: () => onTap,
+          onTap: onTap,
           child: Text(
             title,
             style: TextStyle(

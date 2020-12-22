@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
 class ValidationController {
@@ -13,4 +14,10 @@ class ValidationController {
     RequiredValidator(errorText: 'E-mail field can not be empty.'),
     EmailValidator(errorText: 'Please enter a valid e-mail address.')
   ]);
+
+  final textValidator = MultiValidator([
+    RequiredValidator(errorText: 'This field can not be empty.'),
+  ]);
+
+  final matchValidator = MatchValidator(errorText: 'Passwords aren\'t equal');
 }

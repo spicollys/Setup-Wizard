@@ -8,4 +8,5 @@ class Constants {
   static const Color grey300 = Color(0xFFE0E0E0);
   static const Color grey400 = Color(0xFFBDBDBD);
   static const Color grey600 = Color(0xFF757575);
+  static const Color yellow700 = Color(0xFFFBC02D);
 }
