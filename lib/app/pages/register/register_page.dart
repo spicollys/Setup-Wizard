@@ -34,7 +34,7 @@ class _RegisterPageState extends State<RegisterPage> {
         child: CustomGradientContainer(
           child: Column(
             children: [
-              Flexible(flex: 1, child: LogoSetupWizard()),
+              Flexible(flex: 3, child: LogoSetupWizard()),
               Form(
                 key: _formKey,
                 child: Wrap(

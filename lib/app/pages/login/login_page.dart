@@ -8,6 +8,7 @@ import 'package:setup_wizard/app/components/custom_flushbar.dart';
 import 'package:setup_wizard/app/components/custom_submit_button.dart';
 import 'package:setup_wizard/app/components/logo_setup_wizard.dart';
 import 'package:setup_wizard/app/components/text_field_container.dart';
+import 'package:setup_wizard/app/controllers/log_controller.dart';
 import 'package:setup_wizard/app/controllers/validation_controller.dart';
 import 'package:setup_wizard/app/services/auth/auth.dart';
 
@@ -41,6 +42,7 @@ class _LoginPageState extends State<LoginPage> {
           return null;
         });
         if (user != null) {
+          LogController.logInfo('Well successed log in.');
           Navigator.of(context).popAndPushNamed('/gameGenrePage');
         }
       }
