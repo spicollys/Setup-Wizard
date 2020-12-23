@@ -6,6 +6,7 @@ import 'package:setup_wizard/app/pages/login/login_page.dart';
 import 'package:setup_wizard/app/pages/register/register_page.dart';
 
 import 'app/pages/loading/loading_page.dart';
+import 'app/pages/reset_password/reset_password_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
           '/loginPage': (context) => LoginPage(),
           '/registerPage': (context) => RegisterPage(),
           '/loadingPage': (context) => LoadingPage(),
+          '/resetPasswordPage': (context) => ResetPasswordPage(),
         });
   }
 }

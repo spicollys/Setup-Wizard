@@ -102,14 +102,15 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     CustomInkwell(
                       title: "Forgot your password?",
-                      onTap: () => null,
+                      onTap: () => Navigator.of(context)
+                          .pushNamed('/resetPasswordPage'),
                     ),
                     CustomSubmitButton(
                         title: 'login', onPressed: _validadeAndSubmit),
                     CustomInkwell(
                       title: "Not registered? Sign Up!",
                       onTap: () => Navigator.of(context)
-                          .popAndPushNamed('/registerPage'),
+                          .pushNamed('/registerPage'),
                     ),
                   ],
                 ),

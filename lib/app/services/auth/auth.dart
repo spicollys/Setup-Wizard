@@ -42,4 +42,9 @@ class Auth {
     FirebaseAuth.instance.signOut().catchError(
         (error) => ErrorHandlerController.singOutErrorHandling(error));
   }
+
+  Future<void> resetPassword(String email) async {
+    await _firebaseAuth.sendPasswordResetEmail(email: email);
+  }
+
 }

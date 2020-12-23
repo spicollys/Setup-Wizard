@@ -31,7 +31,7 @@ class _LoadingPageState extends State<LoadingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Constants.grey,
-      body: Center(),
+      body: CircularProgressIndicator(),
     );
   }
 }
