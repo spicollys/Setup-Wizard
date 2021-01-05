@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/pages/game_genre/game_genre_page.dart';
 import 'package:setup_wizard/app/pages/game_list/game_list_page.dart';
+import 'package:setup_wizard/app/pages/homepage/homepage.dart';
 import 'package:setup_wizard/app/pages/login/login_page.dart';
 import 'package:setup_wizard/app/pages/register/register_page.dart';
 
@@ -22,12 +23,13 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.grey,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        initialRoute: '/loginPage',
+        initialRoute: '/homePage',
         routes: {
           '/gameGenrePage': (context) => GameGenrePage(),
           '/gameListPage': (context) => GameListPage(),
           '/loginPage': (context) => LoginPage(),
           '/registerPage': (context) => RegisterPage(),
+          '/homePage': (context) => HomePage(),
         });
   }
 }
