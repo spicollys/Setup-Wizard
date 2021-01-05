@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
           '/loginPage': (context) => LoginPage(),
           '/registerPage': (context) => RegisterPage(),
           '/homePage': (context) => HomePage(),
+          '/hardwareCategoryPage': (context) => null,
         });
   }
 }

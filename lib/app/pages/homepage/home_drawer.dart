@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:setup_wizard/app/components/constants.dart';
 import 'package:setup_wizard/app/services/auth/auth.dart';
-
 
 class DrawerHome extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -17,13 +17,13 @@ class _DrawerHomeState extends State<DrawerHome> {
     return Drawer(
       child: SingleChildScrollView(
         child: Container(
-          color: Colors.blueGrey[200],
+          color: Constants.blueGrey200,
           child: Column(
             children: <Widget>[
               FlatButton(
                 splashColor: Colors.transparent,
                 padding: EdgeInsets.all(8),
-                onPressed: () => Navigator.of(context).pushNamed('/profilePage'),
+                onPressed: () => null,
                 child: CircleAvatar(
                   child: Icon(
                     Icons.person,
@@ -32,11 +32,13 @@ class _DrawerHomeState extends State<DrawerHome> {
                   radius: 35,
                 ),
               ),
-              SizedBox(height: 40,),
+              SizedBox(
+                height: 40,
+              ),
               FlatButton(
-                onPressed: () => Navigator.of(context).pushNamed('/escalaPage'),
+                onPressed: () => null,
                 child: ListTile(
-                  title: Text("My Games"),
+                  title: Text("My Saved Games"),
                   leading: Builder(
                     builder: (BuildContext context) {
                       return Icon(
@@ -46,11 +48,11 @@ class _DrawerHomeState extends State<DrawerHome> {
                   ),
                 ),
               ),
-              SizedBox(height: 5,),
+              SizedBox(
+                height: 5,
+              ),
               FlatButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/groupPage');
-                },
+                onPressed: () => null,
                 child: ListTile(
                   title: Text("Favorite Setups"),
                   leading: Builder(
@@ -62,7 +64,7 @@ class _DrawerHomeState extends State<DrawerHome> {
                   ),
                 ),
               ),
-              SizedBox (
+              SizedBox(
                 height: 362,
               ),
               FlatButton(
@@ -73,7 +75,7 @@ class _DrawerHomeState extends State<DrawerHome> {
                   title: Text("LogOut"),
                   leading: Builder(
                     builder: (BuildContext context) {
-                      return Icon(Icons.subdirectory_arrow_left);
+                      return Icon(Icons.logout);
                     },
                   ),
                 ),
@@ -84,6 +86,4 @@ class _DrawerHomeState extends State<DrawerHome> {
       ),
     );
   }
-
-
 }

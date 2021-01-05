@@ -1,4 +1,7 @@
+import 'package:setup_wizard/app/components/general_header_button.dart';
+
 import 'home_drawer.dart';
+import 'package:setup_wizard/app/components/constants.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -15,10 +18,13 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar:  AppBar(
-          backgroundColor: Colors.blueGrey[100],
+        appBar: AppBar(
+          backgroundColor: Constants.blueGrey100,
           centerTitle: true,
-          title: Text('Setup Wizard', style: TextStyle(fontSize: 30, color: Colors.blueGrey[700]),),
+          title: Text(
+            'Setup Wizard',
+            style: TextStyle(fontSize: 30, color: Constants.blueGrey700),
+          ),
         ),
         key: _scaffoldKey,
         drawer: DrawerHome(scaffoldKey: _scaffoldKey),
@@ -26,22 +32,18 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             Container(
               child: Column(
-
+                children: [
+                  GeneralHeaderButton(
+                      title: 'Game Categories', route: '/gameGenrePage'),
+                  GeneralHeaderButton(
+                      title: 'Hardware Categories',
+                      route: '/hardwareCategoryPage'),
+                ],
               ),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  colors: [
-                    Colors.blueGrey[200],
-                    Colors.blueGrey[300],
-                    Colors.blueGrey[400],
-                    Colors.blueGrey,
-                    Colors.blueGrey[600],
-                  ],
-                ),
+                gradient: Constants.blueGreyGradientPattern,
               ),
             ),
-
           ],
         ),
       ),

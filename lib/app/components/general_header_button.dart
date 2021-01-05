@@ -5,12 +5,12 @@ import 'constants.dart';
 
 class GeneralHeaderButton extends StatelessWidget {
   final String title;
-  GeneralHeaderButton({@required this.title});
+  final String route;
+  GeneralHeaderButton({@required this.title, @required this.route});
 
   @override
   Widget build(BuildContext context) {
     Argument _localArgument = Argument(arguments: [title, null]);
-
 
     return Container(
       height: MediaQuery.of(context).size.height / 5,
@@ -20,8 +20,8 @@ class GeneralHeaderButton extends StatelessWidget {
         child: RaisedButton(
           elevation: 8,
           color: Constants.grey600,
-          onPressed: () => Navigator.pushNamed(context, '/gameListPage',
-              arguments: _localArgument),
+          onPressed: () =>
+              Navigator.pushNamed(context, route, arguments: _localArgument),
           child: Center(
             child: Text(
               title,
