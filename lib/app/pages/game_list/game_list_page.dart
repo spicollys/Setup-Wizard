@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/models/argument.dart';
-import 'package:setup_wizard/app/pages/game_infos/game_infos_page.dart';
+import 'package:setup_wizard/app/pages/game_info/game_info_page.dart';
 import 'package:setup_wizard/app/services/game_data_firebase_service.dart';
 
 class GameListPage extends StatefulWidget {
@@ -35,14 +35,11 @@ class _GameListPageState extends State<GameListPage> {
                         color: Colors.grey,
                       ),
                   itemBuilder: (_, index) {
-                    final DocumentSnapshot document = snapshot.data.documents[index]; //TODO this will be passed when user clicks on tile
+                    final Argument documentAsArgument =
+                        Argument(arguments: [snapshot.data.documents[index]]);
                     return InkWell(
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => GameInfosPage(
-                                    document: document,
-                                  ))),
+                      onTap: () => Navigator.pushNamed(context, '/gameInfoPage',
+                          arguments: documentAsArgument),
                       child: ListTile(
                         title: Text(
                           '${snapshot.data.documents[index]['queryName']}',

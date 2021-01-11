@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/pages/game_genre/game_genre_page.dart';
-import 'package:setup_wizard/app/pages/game_infos/game_infos_page.dart';
+import 'package:setup_wizard/app/pages/game_info/game_info_page.dart';
 import 'package:setup_wizard/app/pages/game_list/game_list_page.dart';
 import 'package:setup_wizard/app/pages/login/login_page.dart';
 import 'package:setup_wizard/app/pages/register/register_page.dart';
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
           '/registerPage': (context) => RegisterPage(),
           '/loadingPage': (context) => LoadingPage(),
           '/resetPasswordPage': (context) => ResetPasswordPage(),
-          '/gameInfosPage': (context) => GameInfosPage(),
+          '/gameInfoPage': (context) => GameInfoPage(),
         });
   }
 }
