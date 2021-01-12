@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/pages/game_genre/game_genre_page.dart';
 import 'package:setup_wizard/app/pages/game_info/game_info_page.dart';
 import 'package:setup_wizard/app/pages/game_list/game_list_page.dart';
+import 'package:setup_wizard/app/pages/homepage/homepage.dart';
 import 'package:setup_wizard/app/pages/login/login_page.dart';
 import 'package:setup_wizard/app/pages/register/register_page.dart';
 
@@ -35,6 +36,8 @@ class MyApp extends StatelessWidget {
           '/loadingPage': (context) => LoadingPage(),
           '/resetPasswordPage': (context) => ResetPasswordPage(),
           '/gameInfoPage': (context) => GameInfoPage(),
+          '/homePage': (context) => HomePage(),
+          '/hardwareCategoryPage': (context) => null,
         });
   }
 }
