@@ -15,73 +15,56 @@ class _DrawerHomeState extends State<DrawerHome> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: SingleChildScrollView(
-        child: Container(
-          color: Constants.blueGrey200,
-          child: Column(
-            children: <Widget>[
-              FlatButton(
-                splashColor: Colors.transparent,
-                padding: EdgeInsets.all(8),
-                onPressed: () => null,
-                child: CircleAvatar(
-                  child: Icon(
-                    Icons.person,
-                    size: 35,
-                  ),
-                  radius: 35,
+      child: Container(
+        color: Constants.blueGrey200,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(
+              height: 50,
+            ),
+            FlatButton(
+              splashColor: Colors.transparent,
+              padding: EdgeInsets.all(15),
+              onPressed: () => null,
+              child: CircleAvatar(
+                child: Icon(
+                  Icons.person,
+                  size: 35,
                 ),
+                radius: 35,
               ),
-              SizedBox(
-                height: 40,
+            ),
+            FlatButton(
+              padding: EdgeInsets.only(top: 5, bottom: 5),
+              onPressed: () => null,
+              child: ListTile(
+                title: Text("My Saved Games"),
+                leading: Icon(Icons.videogame_asset),
               ),
-              FlatButton(
-                onPressed: () => null,
-                child: ListTile(
-                  title: Text("My Saved Games"),
-                  leading: Builder(
-                    builder: (BuildContext context) {
-                      return Icon(
-                        IconData(60088, fontFamily: 'MaterialIcons'),
-                      );
-                    },
-                  ),
-                ),
+            ),
+            FlatButton(
+              padding: EdgeInsets.only(top: 5, bottom: 5),
+              onPressed: () => null,
+              child: ListTile(
+                title: Text("Favorite Setups"),
+                leading: Icon(Icons.star),
               ),
-              SizedBox(
-                height: 5,
+            ),
+            Expanded(
+              child: Container(),
+            ),
+            FlatButton(
+              padding: EdgeInsets.only(top: 5, bottom: 10),
+              onPressed: () {
+                Auth.instance.signOut();
+              },
+              child: ListTile(
+                title: Text("LogOut"),
+                leading: Icon(Icons.logout),
               ),
-              FlatButton(
-                onPressed: () => null,
-                child: ListTile(
-                  title: Text("Favorite Setups"),
-                  leading: Builder(
-                    builder: (BuildContext context) {
-                      return Icon(
-                        IconData(0xea22, fontFamily: 'MaterialIcons'),
-                      );
-                    },
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 362,
-              ),
-              FlatButton(
-                onPressed: () {
-                  Auth.instance.signOut();
-                },
-                child: ListTile(
-                  title: Text("LogOut"),
-                  leading: Builder(
-                    builder: (BuildContext context) {
-                      return Icon(Icons.logout);
-                    },
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

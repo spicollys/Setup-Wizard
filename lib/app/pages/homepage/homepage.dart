@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
           centerTitle: true,
           title: Text(
             'Setup Wizard',
-            style: TextStyle(fontSize: 30, color: Constants.blueGrey700),
+            style: TextStyle(fontSize: 18, color: Constants.blueGrey700),
           ),
         ),
         key: _scaffoldKey,
