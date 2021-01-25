@@ -34,9 +34,9 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: [
                   GeneralHeaderButton(
-                      title: 'Game Categories', route: '/gameGenrePage'),
+                      title: 'GAME CATEGORIES', route: '/gameGenrePage'),
                   GeneralHeaderButton(
-                      title: 'Hardware Categories',
+                      title: 'HARDWARE CATEGORIES',
                       route: '/hardwareCategoryPage'),
                 ],
               ),

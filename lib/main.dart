@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.grey,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        initialRoute: '/loadingPage',
+        initialRoute: '/homePage',
         routes: {
           '/gameGenrePage': (context) => GameGenrePage(),
           '/gameListPage': (context) => GameListPage(),

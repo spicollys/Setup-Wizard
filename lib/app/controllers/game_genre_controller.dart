@@ -14,7 +14,7 @@ class GameGenreController implements IFilterCategoryController {
     "Estrategy",
     "RPG",
     "Simulation",
-    "Free To Play",
+    "Free to Play",
     "Sports",
     "Racing",
     "Massively Multiplayer",

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Constants {
   static const Color blueGrey100 = Color(0xFFCFD8DC);
@@ -12,6 +13,12 @@ class Constants {
   static const Color grey400 = Color(0xFFBDBDBD);
   static const Color grey600 = Color(0xFF757575);
   static const Color yellow700 = Color(0xFFFBC02D);
+  static const Color Indigo200= Color(0xFF9FA8DA);
+  static const Color Indigo300 = Color(0xFF7986CB);
+  static const Color lightBlue100 = Color(0xFF6FADC1);
+  static const Color lightBlue200 = Color(0xFF81D4FA);
+  static const Color canela = Color(0xFFAB480A);
+
 
   static final LinearGradient blueGreyGradientPattern = LinearGradient(
     begin: Alignment.topCenter,
