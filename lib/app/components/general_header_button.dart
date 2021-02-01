@@ -21,20 +21,18 @@ class GeneralHeaderButton extends StatelessWidget {
         child: RaisedButton(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
-            side: BorderSide(color: Colors.white),
+            side: BorderSide(color: Constants.white),
           ),
-
           elevation: 8,
-          color: Constants.canela,
+          color: Constants.cinnamon,
           onPressed: () =>
               Navigator.pushNamed(context, route, arguments: _localArgument),
           child: Center(
             child: Text(
               title,
               style: GoogleFonts.lato(
-                color: Colors.white,
+                color: Constants.white,
                 fontSize: 26,
-
               ),
             ),
           ),

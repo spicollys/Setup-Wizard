@@ -10,6 +10,18 @@ class GameListPage extends StatefulWidget {
 }
 
 class _GameListPageState extends State<GameListPage> {
+  Stream<QuerySnapshot> stream;
+  @override
+  void initState() {
+    //stream = getStream();
+    super.initState();
+  }
+
+  Stream<QuerySnapshot> getStream() {
+    return GameDataFirebaseService.instance
+        .getCollectionSnapshotByGenre(genre: null);
+  }
+
   @override
   Widget build(BuildContext context) {
     final Argument _receivedArgument =
@@ -20,8 +32,7 @@ class _GameListPageState extends State<GameListPage> {
     return Scaffold(
       appBar: AppBar(title: Text(_title), leading: Icon(Icons.videogame_asset)),
       body: StreamBuilder(
-          stream: GameDataFirebaseService.instance
-              .getCollectionSnapshotByGenre(genre: _selectedOption),
+          stream: stream,
           builder: (_, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(

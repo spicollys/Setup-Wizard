@@ -18,7 +18,8 @@ class GameGenrePage extends StatelessWidget {
         child: ListView(
           shrinkWrap: true,
           children: <Widget>[
-            GeneralHeaderButton(title: 'All games', route: '/gameListPage'),
+            GeneralHeaderButton(
+                title: 'All games', route: '/gameListPagination'),
             GeneralOptionGrid(
               controllerInstance: GameGenreController.instance,
             ),
