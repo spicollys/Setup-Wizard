@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/models/argument.dart';
 
+import 'constants.dart';
+
 class GeneralHeaderButton extends StatelessWidget {
   final String title;
-  GeneralHeaderButton({@required this.title});
+  final String route;
+  GeneralHeaderButton({@required this.title, @required this.route});
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +19,9 @@ class GeneralHeaderButton extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
         child: RaisedButton(
           elevation: 8,
-          color: Colors.grey[600],
-          onPressed: () => Navigator.pushNamed(context, '/gameListPage',
-              arguments: _localArgument),
+          color: Constants.grey600,
+          onPressed: () =>
+              Navigator.pushNamed(context, route, arguments: _localArgument),
           child: Center(
             child: Text(
               title,

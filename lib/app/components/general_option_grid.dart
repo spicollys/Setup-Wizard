@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/interfaces/general_controller_interface.dart';
 import 'package:setup_wizard/app/models/argument.dart';
+import 'constants.dart';
 
 class GeneralOptionGrid extends StatelessWidget {
-  final IGeneralPageController controllerInstance;
+  final IFilterCategoryController controllerInstance;
   GeneralOptionGrid({@required this.controllerInstance});
 
   @override
@@ -21,7 +22,7 @@ class GeneralOptionGrid extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: RaisedButton(
             elevation: 8,
-            color: Colors.grey[600],
+            color: Constants.grey600,
             onPressed: () => Navigator.pushNamed(context, '/gameListPage',
                 arguments: _localArgument),
             child: FittedBox(

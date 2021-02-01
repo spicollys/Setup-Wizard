@@ -1,6 +1,6 @@
 import 'package:setup_wizard/app/interfaces/general_controller_interface.dart';
 
-class HardwareCategoryController implements IGeneralPageController {
+class HardwareCategoryController implements IFilterCategoryController {
   static final HardwareCategoryController instance =
       HardwareCategoryController._(); //singleton pattern
 

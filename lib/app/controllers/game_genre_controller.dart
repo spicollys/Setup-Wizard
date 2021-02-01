@@ -1,6 +1,6 @@
 import 'package:setup_wizard/app/interfaces/general_controller_interface.dart';
 
-class GameGenreController implements IGeneralPageController {
+class GameGenreController implements IFilterCategoryController {
   static final GameGenreController instance =
       GameGenreController._(); //singleton pattern
 

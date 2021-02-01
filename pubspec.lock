@@ -120,6 +120,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.1+1"
+  flushbar:
+    dependency: "direct main"
+    description:
+      name: flushbar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.10.4"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -142,6 +149,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  form_field_validator:
+    dependency: "direct main"
+    description:
+      name: form_field_validator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   http:
     dependency: transitive
     description:
@@ -171,7 +185,7 @@ packages:
     source: hosted
     version: "1.1.6"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       url: "https://pub.dartlang.org"
@@ -184,6 +198,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.2"
+  logger:
+    dependency: "direct main"
+    description:
+      name: logger
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.9.4"
   matcher:
     dependency: transitive
     description:
