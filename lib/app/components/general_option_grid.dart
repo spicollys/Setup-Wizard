@@ -27,7 +27,7 @@ class GeneralOptionGrid extends StatelessWidget {
               borderRadius: BorderRadius.circular(12.0),
             ),
             color: Constants.blueGrey600,
-            onPressed: () => Navigator.pushNamed(context, '/gameListPage',
+            onPressed: () => Navigator.pushNamed(context, '/gameListPagination',
                 arguments: _localArgument),
             child: FittedBox(
               fit: BoxFit.fitHeight,

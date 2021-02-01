@@ -10,6 +10,7 @@ class GameListPagination extends StatefulWidget {
 }
 
 class _GameListPaginationState extends State<GameListPagination> {
+  Future<String> collectionGameGenre;
   List<DocumentSnapshot> docs = [];
   bool isLoading = false;
   bool hasMore = true;
@@ -25,18 +26,25 @@ class _GameListPaginationState extends State<GameListPagination> {
   @override
   void initState() {
     super.initState();
-    getDocs();
+    collectionGameGenre = Future.delayed(Duration.zero, () {
+      final Argument receivedArgument =
+          ModalRoute.of(context).settings.arguments;
+      return receivedArgument.arguments[1];
+    });
+
+    getDocs(collectionGameGenre);
     _scrollController.addListener(() {
       double maxScroll = _scrollController.position.maxScrollExtent;
       double currentScroll = _scrollController.position.pixels;
       double delta = MediaQuery.of(context).size.height * 0.20;
       if (maxScroll - currentScroll <= delta) {
-        getDocs();
+        getDocs(collectionGameGenre);
       }
     });
   }
 
-  getDocs() async {
+  getDocs(Future<String> collectionGameGenre) async {
+    String genre = await collectionGameGenre;
     if (!hasMore) {
       print('No More Docs');
       return;
@@ -50,12 +58,12 @@ class _GameListPaginationState extends State<GameListPagination> {
     QuerySnapshot querySnapshot;
     if (lastDocument == null) {
       querySnapshot = await GameDataFirebaseService.instance
-          .getCollection()
+          .getCollectionReferenceByGenre(genre: genre)
           .limit(documentLimit)
           .get();
     } else {
       querySnapshot = await GameDataFirebaseService.instance
-          .getCollection()
+          .getCollectionReferenceByGenre(genre: genre)
           .startAfterDocument(lastDocument)
           .limit(documentLimit)
           .get();
@@ -77,11 +85,10 @@ class _GameListPaginationState extends State<GameListPagination> {
 
   @override
   Widget build(BuildContext context) {
-    final Argument _receivedArgument =
-        ModalRoute.of(context).settings.arguments;
-    final _title = _receivedArgument.arguments[0];
+    final Argument receivedArgument = ModalRoute.of(context).settings.arguments;
+    final title = receivedArgument.arguments[0];
     return Scaffold(
-      appBar: AppBar(title: Text(_title), leading: Icon(Icons.videogame_asset)),
+      appBar: AppBar(title: Text(title), leading: Icon(Icons.videogame_asset)),
       body: StreamBuilder(
         stream: _streamController,
         builder: (context, AsyncSnapshot snapshot) {

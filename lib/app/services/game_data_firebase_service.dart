@@ -36,4 +36,10 @@ class GameDataFirebaseService implements IFirebaseService {
         ? _gameServiceCollection.snapshots()
         : _gameServiceCollection.where(genre, isEqualTo: true).snapshots();
   }
+
+  Query getCollectionReferenceByGenre({@required String genre}) {
+    return (genre == null)
+        ? _gameServiceCollection
+        : _gameServiceCollection.where(genre, isEqualTo: true);
+  }
 }
