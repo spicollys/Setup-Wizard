@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'constants.dart';
 
 class CustomContainerText extends StatelessWidget {
-  final String text;
+  final Widget child;
 
-  const CustomContainerText({Key key, this.text}) : super(key: key);
+  const CustomContainerText({Key key, this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text(text),
+      child: child,
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.all(8),
       padding: EdgeInsets.all(16),
