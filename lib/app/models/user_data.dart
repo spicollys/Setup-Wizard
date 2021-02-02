@@ -1,5 +1,4 @@
 import 'package:setup_wizard/app/interfaces/user_interface.dart';
-import 'package:setup_wizard/app/services/auth/auth.dart';
 
 class UserData implements IUser {
   @override
@@ -8,17 +7,17 @@ class UserData implements IUser {
   @override
   String name;
 
-  String imagePicker;
+  String profilePicture;
 
   UserData({this.email, this.name});
 
   UserData.fromJson(Map<String, dynamic> json)
       : email = json['email'],
         name = json['name'],
-        imagePicker = json['imagePicker'];
+        profilePicture = json['profilePicture'];
 
   @override
-  Map<String, dynamic> toJson() => {'email': email, 'name': name, 'imagePicker': imagePicker};
+  Map<String, dynamic> toJson() => {'email': email, 'name': name, 'profilePicture': profilePicture};
 
   @override
   String getName({name}) {
@@ -30,8 +29,8 @@ class UserData implements IUser {
     return email;
   }
 
-  String getImagePicker({imagePicker}) {
-    return imagePicker;
+  String getProfilePicture({profilePicture}) {
+    return profilePicture;
   }
 
   @override
@@ -44,7 +43,7 @@ class UserData implements IUser {
     this.email = email;
   }
 
-  void setImagePicker({imagePicker}) {
-    this.imagePicker = imagePicker;
+  void setProfilePicture({profilePicture}) {
+    this.profilePicture = profilePicture;
   }
 }

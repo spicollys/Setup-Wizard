@@ -2,9 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/components/constants.dart';
 import 'package:setup_wizard/app/components/custom_flushbar.dart';
+import 'package:setup_wizard/app/interfaces/user_interface.dart';
+import 'package:setup_wizard/app/models/user_data.dart';
 import 'package:setup_wizard/app/services/auth/auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+
+import 'package:setup_wizard/app/services/user_firebase_service.dart';
 
 class DrawerHome extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -25,14 +29,16 @@ class _DrawerHomeState extends State<DrawerHome> {
   File _image;
   final picker = ImagePicker();
 
-  Future _updateImagePicker(String imagePicker) async {
+  Future _updateProfilePicture(String profilePicture) async {
     User firebaseUser = FirebaseAuth.instance.currentUser;
-    await Auth.instance
-              .update(firebaseUser.uid, firebaseUser.email, firebaseUser.displayName, imagePicker)
-              .catchError((error) {
-                CustomFlushBar.show(
-                  context: context, title: "Register error:", message: error);
-                  });
+
+    var userSnapshot = await UserFirebaseService.instance.get(id: firebaseUser.uid);
+    var userDocument = userSnapshot.data();
+
+    UserData userData = new UserData(email: userDocument['email'], name: userDocument['name']);
+    userData.setProfilePicture(profilePicture: profilePicture);
+    await UserFirebaseService.instance.put(id: firebaseUser.uid, value: userData.toJson());
+    
   }
 
   Future getImage() async {
@@ -41,7 +47,7 @@ class _DrawerHomeState extends State<DrawerHome> {
     setState(() {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
-        _updateImagePicker(_image.toString());
+        _updateProfilePicture(_image.toString());
       } else {
         print('No image selected.');
       }
