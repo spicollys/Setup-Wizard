@@ -1,14 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/components/constants.dart';
-import 'package:setup_wizard/app/components/custom_flushbar.dart';
-import 'package:setup_wizard/app/interfaces/user_interface.dart';
 import 'package:setup_wizard/app/models/user_data.dart';
 import 'package:setup_wizard/app/services/auth/auth.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
-
 import 'package:setup_wizard/app/services/user_firebase_service.dart';
+import 'dart:io';
 
 class DrawerHome extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -37,8 +34,8 @@ class _DrawerHomeState extends State<DrawerHome> {
 
     UserData userData = new UserData(email: userDocument['email'], name: userDocument['name']);
     userData.setProfilePicture(profilePicture: profilePicture);
-    await UserFirebaseService.instance.put(id: firebaseUser.uid, value: userData.toJson());
-    
+    await UserFirebaseService.instance
+        .put(id: firebaseUser.uid, value: userData.toJson());
   }
 
   Future getImage() async {

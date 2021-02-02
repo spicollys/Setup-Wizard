@@ -17,7 +17,8 @@ class UserData implements IUser {
         profilePicture = json['profilePicture'];
 
   @override
-  Map<String, dynamic> toJson() => {'email': email, 'name': name, 'profilePicture': profilePicture};
+  Map<String, dynamic> toJson() =>
+      {'email': email, 'name': name, 'profilePicture': profilePicture};
 
   @override
   String getName({name}) {
