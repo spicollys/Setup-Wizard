@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/components/constants.dart';
+import 'package:setup_wizard/app/components/custom_flushbar.dart';
 import 'package:setup_wizard/app/services/auth/auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -23,18 +25,28 @@ class _DrawerHomeState extends State<DrawerHome> {
   File _image;
   final picker = ImagePicker();
 
+  Future _updateImagePicker(String imagePicker) async {
+    User firebaseUser = FirebaseAuth.instance.currentUser;
+    await Auth.instance
+              .update(firebaseUser.uid, firebaseUser.email, firebaseUser.displayName, imagePicker)
+              .catchError((error) {
+                CustomFlushBar.show(
+                  context: context, title: "Register error:", message: error);
+                  });
+  }
+
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
     setState(() {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
+        _updateImagePicker(_image.toString());
       } else {
         print('No image selected.');
       }
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -54,14 +66,18 @@ class _DrawerHomeState extends State<DrawerHome> {
                 onPressed: getImage,
                 child: CircleAvatar(
                   child: _image == null
-                      ? Icon(Icons.person, size: 35,)
+                      ? Icon(
+                          Icons.person,
+                          size: 35,
+                        )
                       : ClipOval(
-                    child: Image.file(_image,
-                      fit: BoxFit.cover,
-                      width: 100,
-                      height: 100,
-                    ),
-                  ),
+                          child: Image.file(
+                            _image,
+                            fit: BoxFit.cover,
+                            width: 100,
+                            height: 100,
+                          ),
+                        ),
                   radius: 50,
                 ),
               ),

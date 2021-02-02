@@ -47,4 +47,13 @@ class Auth {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
 
+  Future<void> update(String uid, String email, String name, String imagePicker) async {
+
+    UserData userData = new UserData(email: email, name: name);
+    userData.getImagePicker(imagePicker: imagePicker);
+
+    await UserFirebaseService.instance
+        .put(id: uid, value: userData.toJson());
+    
+  }
 }
