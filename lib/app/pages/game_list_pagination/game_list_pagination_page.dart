@@ -1,17 +1,19 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:setup_wizard/app/components/constants.dart';
+import 'package:setup_wizard/app/controllers/log_controller.dart';
 import 'package:setup_wizard/app/models/argument.dart';
 import 'package:setup_wizard/app/services/game_data_firebase_service.dart';
 
-class GameListPagination extends StatefulWidget {
+class GameListPaginationPage extends StatefulWidget {
   @override
-  _GameListPaginationState createState() => _GameListPaginationState();
+  _GameListPaginationPageState createState() => _GameListPaginationPageState();
 }
 
-class _GameListPaginationState extends State<GameListPagination> {
+class _GameListPaginationPageState extends State<GameListPaginationPage> {
   Future<String> collectionGameGenre;
-  List<DocumentSnapshot> docs = [];
+  List<DocumentSnapshot> documentList = [];
   bool isLoading = false;
   bool hasMore = true;
   int documentLimit = 20;
@@ -46,7 +48,7 @@ class _GameListPaginationState extends State<GameListPagination> {
   getDocs(Future<String> collectionGameGenre) async {
     String genre = await collectionGameGenre;
     if (!hasMore) {
-      print('No More Docs');
+      LogController.logInfo('No more docs.');
       return;
     }
     if (isLoading) {
@@ -62,12 +64,12 @@ class _GameListPaginationState extends State<GameListPagination> {
           .limit(documentLimit)
           .get();
     } else {
+      LogController.logInfo('Limit reached, loading more 20 items...');
       querySnapshot = await GameDataFirebaseService.instance
           .getCollectionReferenceByGenre(genre: genre)
           .startAfterDocument(lastDocument)
           .limit(documentLimit)
           .get();
-      print(1);
     }
     if (querySnapshot.docs.length < documentLimit) {
       hasMore = false;
@@ -75,8 +77,8 @@ class _GameListPaginationState extends State<GameListPagination> {
 
     lastDocument = querySnapshot.docs[querySnapshot.docs.length - 1];
 
-    docs.addAll(querySnapshot.docs);
-    _controller.sink.add(docs);
+    documentList.addAll(querySnapshot.docs);
+    _controller.sink.add(documentList);
 
     setState(() {
       isLoading = false;
@@ -108,7 +110,7 @@ class _GameListPaginationState extends State<GameListPagination> {
                   itemCount: snapshot.data.length,
                   controller: _scrollController,
                   separatorBuilder: (_, index) => Divider(
-                        color: Colors.grey,
+                        color: Constants.grey,
                       ),
                   itemBuilder: (_, index) {
                     final Argument documentAsArgument =

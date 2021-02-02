@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:setup_wizard/app/components/constants.dart';
 import 'package:setup_wizard/app/components/custom_container_text.dart';
 import 'package:setup_wizard/app/components/custom_gradient_container.dart';
 import 'package:setup_wizard/app/controllers/ExpandableText.dart';
@@ -34,22 +33,28 @@ class _GameInfoPageState extends State<GameInfoPage> {
             children: [
               Image.network("${document['headerImage']}"),
               CustomContainerText(
-                child: Text("Minimum Specifications:\n\n"
-                    "Graphic: ${listOfInfo[0]}\n"
-                    "Processor: ${listOfInfo[1]}\n"
-                    "Memory: ${listOfInfo[2]}\n"
-                    "Others Requirements: ${listOfInfo[3]}\n\n\n"
-                    "Recomended Specifications: \n\n"
-                    "Graphic: ${listOfInfo[4]}\n"
-                    "Processor: ${listOfInfo[5]}\n"
-                    "Memory: ${listOfInfo[6]}\n"
-                    "Others Requirements: ${listOfInfo[7]}",),),
-
-              CustomContainerText(
-                child: ExpandableText(document['aboutText'], trimLines: 3,),
+                child: Text(
+                  "Minimum Specifications:\n\n"
+                  "Graphic: ${listOfInfo[0]}\n"
+                  "Processor: ${listOfInfo[1]}\n"
+                  "Memory: ${listOfInfo[2]}\n"
+                  "Others Requirements: ${listOfInfo[3]}\n\n\n"
+                  "Recomended Specifications: \n\n"
+                  "Graphic: ${listOfInfo[4]}\n"
+                  "Processor: ${listOfInfo[5]}\n"
+                  "Memory: ${listOfInfo[6]}\n"
+                  "Others Requirements: ${listOfInfo[7]}",
+                ),
               ),
               CustomContainerText(
-                child: Text("Supported languages: ${document['supportedLanguages']}"),
+                child: ExpandableText(
+                  document['aboutText'],
+                  trimLines: 3,
+                ),
+              ),
+              CustomContainerText(
+                child: Text(
+                    "Supported languages: ${document['supportedLanguages']}"),
               ),
               CustomContainerText(
                 child: Text("Release Date: ${document['releaseDate']}"),
