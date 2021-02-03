@@ -1,11 +1,10 @@
-import 'dart:html';
-
+import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 
 abstract class IFirebaseStorageService {
   static final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
 
-  Future get({String id});
+  Future<String> get({TaskSnapshot value});
   Future delete({String id});
-  Future put({File value});
+  TaskSnapshot put({File value, String filename});
 }
