@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/components/constants.dart';
 import 'package:setup_wizard/app/models/user_data.dart';
@@ -26,14 +27,26 @@ class _DrawerHomeState extends State<DrawerHome> {
   File _image;
   final picker = ImagePicker();
 
-  Future _updateProfilePicture(String profilePicture) async {
+  Future _updateProfilePicture(File profilePicture) async {
     User firebaseUser = FirebaseAuth.instance.currentUser;
+    final _firebaseStorage = FirebaseStorage.instance;
 
-    var userSnapshot = await UserFirebaseService.instance.get(id: firebaseUser.uid);
+    var userSnapshot =
+        await UserFirebaseService.instance.get(id: firebaseUser.uid);
     var userDocument = userSnapshot.data();
 
-    UserData userData = new UserData(email: userDocument['email'], name: userDocument['name']);
-    userData.setProfilePicture(profilePicture: profilePicture);
+    UserData userData =
+        new UserData(email: userDocument['email'], name: userDocument['name']);
+
+    String filename = 'image1';
+    var snapshot = _firebaseStorage
+        .ref()
+        .child('$filename')
+        .putFile(profilePicture)
+        .snapshot;
+    String downloadUrl = await snapshot.ref.getDownloadURL();
+
+    userData.setProfilePicture(profilePicture: downloadUrl);
     await UserFirebaseService.instance
         .put(id: firebaseUser.uid, value: userData.toJson());
   }
@@ -43,8 +56,9 @@ class _DrawerHomeState extends State<DrawerHome> {
 
     setState(() {
       if (pickedFile != null) {
-        _image = File(pickedFile.path);
-        _updateProfilePicture(_image.toString());
+        _image =
+            File(pickedFile.path); //code before _image = File(pickedFile.path);
+        _updateProfilePicture(_image);
       } else {
         print('No image selected.');
       }
