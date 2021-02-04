@@ -19,10 +19,10 @@ class _LoadingPageState extends State<LoadingPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (firebaseUser != null) {
         Navigator.pushNamedAndRemoveUntil(
-            context, '/gameGenrePage', (Route<dynamic> route) => false);
+            context, '/homePage', (Route<dynamic> route) => false);
       } else {
         Navigator.pushNamedAndRemoveUntil(
-            context, '/homePage', (Route<dynamic> route) => false);
+            context, '/loginPage', (Route<dynamic> route) => false);
       }
     });
   }
