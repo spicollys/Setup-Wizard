@@ -38,12 +38,14 @@ class _DrawerHomeState extends State<DrawerHome> {
     UserData userData =
         new UserData(email: userDocument['email'], name: userDocument['name']);
 
-    String filename = 'i' + profilePicture
-        .toString()
-        .substring(52, profilePicture.toString().length);
+    String filename = 'i' +
+        profilePicture
+            .toString()
+            .substring(52, profilePicture.toString().length);
     var snapshot = FirebaseStorageService.instance
         .put(value: profilePicture, filename: filename);
-    String downloadUrl = await FirebaseStorageService.instance.get(value: snapshot);
+    String downloadUrl =
+        await FirebaseStorageService.instance.get(value: snapshot);
 
     userData.setProfilePicture(profilePicture: downloadUrl);
     await UserFirebaseService.instance
