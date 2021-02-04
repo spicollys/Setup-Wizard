@@ -22,7 +22,7 @@ class _LoadingPageState extends State<LoadingPage> {
             context, '/gameGenrePage', (Route<dynamic> route) => false);
       } else {
         Navigator.pushNamedAndRemoveUntil(
-            context, '/loginPage', (Route<dynamic> route) => false);
+            context, '/homePage', (Route<dynamic> route) => false);
       }
     });
   }
