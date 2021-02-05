@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:setup_wizard/app/interfaces/firebase_service_interface.dart';
 
 class GameDataFirebaseService implements IFirebaseService {
@@ -26,5 +27,13 @@ class GameDataFirebaseService implements IFirebaseService {
   Future put({String id, value}) async {
     //TODO - value need to be a mapped object
     await _gameServiceCollection.doc(id).set(value);
+  }
+
+  CollectionReference getCollection() => _gameServiceCollection;
+
+  Query getCollectionReferenceByGenre({@required String genre}) {
+    return (genre == null)
+        ? _gameServiceCollection
+        : _gameServiceCollection.where(genre, isEqualTo: true);
   }
 }
