@@ -23,7 +23,8 @@ class CustomContainerText extends StatelessWidget {
                 spreadRadius: 0.5,
                 color: Constants.blueGrey400
             ),
-          ]
+          ],
+        borderRadius: BorderRadius.circular(10),
       ),
     );
   }
