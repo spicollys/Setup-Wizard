@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/components/constants.dart';
 
-class CustomGradientContainer extends StatelessWidget {
+class CustomGradientContainerBlueGrey extends StatelessWidget {
   final Widget child;
-  CustomGradientContainer({@required this.child});
+  CustomGradientContainerBlueGrey({@required this.child});
   @override
   Widget build(BuildContext context) {
     return Container(
