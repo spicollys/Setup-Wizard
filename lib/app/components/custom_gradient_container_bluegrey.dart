@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/components/constants.dart';
 
-class CustomGradientContainer extends StatelessWidget {
+class CustomGradientContainerBlueGrey extends StatelessWidget {
   final Widget child;
-  CustomGradientContainer({@required this.child});
+  CustomGradientContainerBlueGrey({@required this.child});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -12,10 +12,10 @@ class CustomGradientContainer extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-          Constants.grey300,
-          Constants.grey400,
-          Constants.grey,
-          Constants.grey600,
+          Constants.blueGrey300,
+          Constants.blueGrey400,
+          Constants.blueGrey600,
+          Constants.blueGrey700,
         ]),
       ),
     );
