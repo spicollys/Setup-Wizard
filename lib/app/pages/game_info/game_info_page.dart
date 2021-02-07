@@ -47,6 +47,15 @@ class _GameInfoPageState extends State<GameInfoPage> {
                 ),
               ),
               CustomContainerText(
+                child: Text("Hardwares ranking\n\n"
+                    "Minimum Graphic Ranking: ${document['GraphicsRankingMin']}\n"
+                    "Recommended Graphic Ranking: ${document['GraphicsRankingRec']}\n\n"
+                    "Minimum Memory Ranking: ${document['MemoryRankingMin']}\n"
+                    "Recommended Memory Ranking: ${document['MemoryRankingRec']}\n\n"
+                    "Minimum Processor Ranking: ${document['ProcessorRankingMinAdjusted']}\n"
+                    "Recommended Processor Ranking: ${document['ProcessorRankingRecAdjusted']}"),
+              ),
+              CustomContainerText(
                 child: ExpandableText(
                   document['aboutText'],
                   trimLines: 3,
