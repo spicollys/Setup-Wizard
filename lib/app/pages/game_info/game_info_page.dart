@@ -15,6 +15,8 @@ class GameInfoPage extends StatefulWidget {
 
 class _GameInfoPageState extends State<GameInfoPage> {
   _GameInfoPageState();
+  bool isFavorite = false;
+  Color colors = Colors.white;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,31 @@ class _GameInfoPageState extends State<GameInfoPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Image.network("${document['headerImage']}"),
+              //Image.network("${document['headerImage']}")
+              Container(
+                constraints: BoxConstraints.expand(
+                  height: 200.0,
+                ),
+                padding: EdgeInsets.symmetric(),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage("${document['headerImage']}"),
+                  ),
+                ),
+                child: Stack(
+                  children: <Widget>[
+                    Positioned(
+                      right: 10.0,
+                      bottom: 10.0,
+                      child: Icon(
+                        Icons.favorite_rounded,
+                        size: 50,
+                        color: colors,
+                      ),
+                    )
+                  ],
+                ),
+              ),
               CustomContainerText(
                 child: Text(
                   "Minimum Specifications:\n\n"
