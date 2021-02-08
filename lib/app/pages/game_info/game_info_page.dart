@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/components/custom_container_text.dart';
-import 'package:setup_wizard/app/components/custom_gradient_container.dart';
+import 'package:setup_wizard/app/components/custom_gradient_container_bluegrey.dart';
 import 'package:setup_wizard/app/controllers/expandable_text_conroller.dart';
 import 'package:setup_wizard/app/controllers/game_info_controller.dart';
 import 'package:setup_wizard/app/models/argument.dart';
@@ -29,7 +29,7 @@ class _GameInfoPageState extends State<GameInfoPage> {
       appBar: AppBar(
           title: Text("${document['queryName']}"),
           leading: Icon(Icons.videogame_asset)),
-      body: CustomGradientContainer(
+      body: CustomGradientContainerBlueGrey(
         child: SingleChildScrollView(
           child: Column(
             children: [

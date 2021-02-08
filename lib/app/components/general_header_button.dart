@@ -24,7 +24,7 @@ class GeneralHeaderButton extends StatelessWidget {
             side: BorderSide(color: Constants.white),
           ),
           elevation: 8,
-          color: Constants.cinnamon,
+          color: Constants.cyan800,
           onPressed: () =>
               Navigator.pushNamed(context, route, arguments: _localArgument),
           child: Center(
