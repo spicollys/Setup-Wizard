@@ -52,7 +52,6 @@ flutter:
 
   assets:
     - lib/assets/images/logo1.png
-    - lib/assets/json/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
