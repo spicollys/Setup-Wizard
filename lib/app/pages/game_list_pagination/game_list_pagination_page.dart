@@ -126,10 +126,7 @@ class _GameListPaginationPageState extends State<GameListPaginationPage> {
                           child: ListTile(
                             leading: CircleAvatar(
                               backgroundImage: NetworkImage('${snapshot.data[index]['headerImage']}'),),
-                            trailing: IconButton(
-                              icon: Icon(Icons.favorite_border),
-                              onPressed: () => Favorite.instance.getFavoriteList(),
-                            ) ,
+                            trailing: Icon(Icons.favorite_border),
                             title: Text(
                               '${snapshot.data[index]['queryName']}',
                               style: TextStyle(fontWeight: FontWeight.bold),
@@ -154,7 +151,8 @@ class _GameListPaginationPageState extends State<GameListPaginationPage> {
     );
   }
 
-  // Icon FavoriteSystem(){
-  //   if
-  // }
+
+  Future<Widget> FavoriteSystem(int id) async{
+    return await Favorite.instance.isInFavoriteList(id) ? Icon(Icons.favorite, color: Colors.red,) : Icon(Icons.favorite_border);
+  }
 }
