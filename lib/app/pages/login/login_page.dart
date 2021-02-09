@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
         });
         if (user != null) {
           LogController.logInfo('Signed in with success.');
-          Navigator.of(context).popAndPushNamed('/gameGenrePage');
+          Navigator.of(context).popAndPushNamed('/homePage');
         }
       }
     }
