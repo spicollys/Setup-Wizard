@@ -18,6 +18,18 @@ class _GameInfoPageState extends State<GameInfoPage> {
   bool isFavorite = false;
   Color colors = Colors.white;
 
+  void setFavorite() {
+    setState(() {
+      if (colors == Colors.white) {
+        colors = Colors.red;
+        isFavorite = true;
+      } else {
+        colors = Colors.white;
+        isFavorite = false;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final Argument _receivedArgument =
@@ -49,10 +61,11 @@ class _GameInfoPageState extends State<GameInfoPage> {
                     Positioned(
                       right: 10.0,
                       bottom: 10.0,
-                      child: Icon(
-                        Icons.favorite_rounded,
-                        size: 50,
+                      child: IconButton(
+                        icon: Icon(Icons.favorite_rounded),
+                        iconSize: 50,
                         color: colors,
+                        onPressed: () => setFavorite(),
                       ),
                     )
                   ],
