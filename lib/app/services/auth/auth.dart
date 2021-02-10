@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:setup_wizard/app/controllers/error_handler_controller.dart';
 import 'package:setup_wizard/app/interfaces/user_interface.dart';
@@ -20,6 +21,7 @@ class Auth {
             (error) => throw ErrorHandlerController.singUpErrorHandling(error));
 
     fireUser = userCredential.user;
+    FirebaseFirestore.instance.collection('favorite').doc(fireUser.uid).set({});
     IUser userData = new UserData(email: email, name: name);
 
     await UserFirebaseService.instance

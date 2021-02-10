@@ -48,9 +48,7 @@ class _DrawerHomeState extends State<DrawerHome> {
             ),
             FlatButton(
               padding: EdgeInsets.only(top: 5, bottom: 5),
-              onPressed: () => Navigator.pushNamed(
-                  context, '/gameListPaginationPage',
-                  arguments: Favorite.instance.getFavoriteList()),
+              onPressed: () {},
               child: ListTile(
                 title: Text("My Favorite Games"),
                 leading: Icon(Icons.videogame_asset),
