@@ -29,30 +29,32 @@ class _DrawerHomeState extends State<DrawerHome> {
   String _imageFirebase;
   Map<String, dynamic> _userDocument;
   final picker = ImagePicker();
-  User _firebaseUser = FirebaseAuth.instance.currentUser;
+  User _firebaseUser;
 
   @override
-  void initState() async{
+  void initState() {
     super.initState();
 
-    await setImage();
+    setImage();
   }
 
   Future setImage() async {
     _userDocument = await getUserData();
     _imageFirebase = _userDocument['profilePicture'];
+
+    setState(() {});
   }
 
   Future<Map<String, dynamic>> getUserData() async {
+    _firebaseUser = FirebaseAuth.instance.currentUser;
     DocumentSnapshot userSnapshot =
         await UserFirebaseService.instance.get(id: _firebaseUser.uid);
     return userSnapshot.data();
   }
 
-  Future _updateProfilePicture(
-      File profilePicture) async {
-    UserData userData =
-        new UserData(email: _userDocument['email'], name: _userDocument['name']);
+  Future _updateProfilePicture(File profilePicture) async {
+    UserData userData = new UserData(
+        email: _userDocument['email'], name: _userDocument['name']);
 
     String filename = 'i' +
         profilePicture
@@ -71,14 +73,13 @@ class _DrawerHomeState extends State<DrawerHome> {
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-        _updateProfilePicture(_image);
-      } else {
-        print('No image selected.');
-      }
-    });
+    if (pickedFile != null) {
+      _image = File(pickedFile.path);
+      _updateProfilePicture(_image);
+      setImage();
+    } else {
+      print('No image selected.');
+    }
   }
 
   @override
@@ -92,35 +93,34 @@ class _DrawerHomeState extends State<DrawerHome> {
             SizedBox(
               height: 50,
             ),
-            Center(
-              child: FlatButton(
-                splashColor: Colors.transparent,
-                padding: EdgeInsets.all(15),
-                onPressed: getImage,
-                child: CircleAvatar(
-                  child: _image == null
-                      ? Icon(
-                          Icons.person,
-                          size: 35,
-                        )
-                      : ClipOval(
-                          child: _imageFirebase != null
-                              ? Image.network(
-                                  _imageFirebase,
-                                  fit: BoxFit.cover,
-                                  width: 100,
-                                  height: 100,
-                                )
-                              : Image.file(
-                                  _image,
-                                  fit: BoxFit.cover,
-                                  width: 100,
-                                  height: 100,
-                                ),
-                        ),
-                  radius: 50,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.center,
+                  child: CircleAvatar(
+                    radius: 50,
+                    backgroundColor: Colors.white,
+                    child: _imageFirebase == null
+                        ? Icon(
+                            Icons.person,
+                            size: 35,
+                          )
+                        : ClipOval(
+                            child: Image.network(
+                              _imageFirebase,
+                              fit: BoxFit.cover,
+                              width: 100,
+                              height: 100,
+                            ),
+                          ),
+                  ),
                 ),
-              ),
+                FlatButton(
+                  child: Icon(Icons.settings),
+                  onPressed: getImage,
+                ),
+              ],
             ),
             FlatButton(
               padding: EdgeInsets.only(top: 5, bottom: 5),
