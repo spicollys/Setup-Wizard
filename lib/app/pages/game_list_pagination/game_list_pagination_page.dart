@@ -23,6 +23,7 @@ class _GameListPaginationPageState extends State<GameListPaginationPage> {
   int documentLimit = 20;
   DocumentSnapshot lastDocument;
   ScrollController _scrollController = ScrollController();
+  Color _favoriteColor = Colors.white;
 
   StreamController<List<DocumentSnapshot>> _controller =
       StreamController<List<DocumentSnapshot>>();
@@ -89,6 +90,16 @@ class _GameListPaginationPageState extends State<GameListPaginationPage> {
     });
   }
 
+  void setFavorite() {
+    setState(() {
+      if (_favoriteColor == Colors.white) {
+        _favoriteColor = Colors.red;
+      } else {
+        _favoriteColor = Colors.white;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final Argument receivedArgument = ModalRoute.of(context).settings.arguments;
@@ -125,11 +136,16 @@ class _GameListPaginationPageState extends State<GameListPaginationPage> {
                           elevation: 2.0,
                           child: ListTile(
                             leading: CircleAvatar(
-                              backgroundImage: NetworkImage('${snapshot.data[index]['headerImage']}'),),
+                              backgroundImage: NetworkImage(
+                                  '${snapshot.data[index]['headerImage']}'),
+                            ),
                             trailing: IconButton(
-                              icon: Icon(Icons.favorite_border),
-                              onPressed: () => Favorite.instance.getFavoriteList(),
-                            ) ,
+                              icon: Icon(
+                                Icons.favorite,
+                                color: _favoriteColor,
+                              ),
+                              onPressed: setFavorite,
+                            ),
                             title: Text(
                               '${snapshot.data[index]['queryName']}',
                               style: TextStyle(fontWeight: FontWeight.bold),
