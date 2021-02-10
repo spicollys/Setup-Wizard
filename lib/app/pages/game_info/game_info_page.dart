@@ -21,7 +21,7 @@ class _GameInfoPageState extends State<GameInfoPage> {
   void setFavorite() {
     setState(() {
       if (colors == Colors.white) {
-        colors = Colors.red;
+        colors = Colors.yellow;
         isFavorite = true;
       } else {
         colors = Colors.white;
@@ -45,7 +45,6 @@ class _GameInfoPageState extends State<GameInfoPage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              //Image.network("${document['headerImage']}")
               Container(
                 constraints: BoxConstraints.expand(
                   height: 200.0,
@@ -62,7 +61,7 @@ class _GameInfoPageState extends State<GameInfoPage> {
                       right: 10.0,
                       bottom: 10.0,
                       child: IconButton(
-                        icon: Icon(Icons.favorite_rounded),
+                        icon: Icon(Icons.star),
                         iconSize: 50,
                         color: colors,
                         onPressed: () => setFavorite(),
