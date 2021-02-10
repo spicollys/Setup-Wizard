@@ -29,16 +29,20 @@ class _DrawerHomeState extends State<DrawerHome> {
             SizedBox(
               height: 50,
             ),
-            FlatButton(
-              splashColor: Colors.transparent,
-              padding: EdgeInsets.all(15),
-              onPressed: () => null,
-              child: CircleAvatar(
-                child: Icon(
-                  Icons.person,
-                  size: 35,
+            Padding(
+              padding: const EdgeInsets.only(left: 100),
+              child: FlatButton(
+
+                splashColor: Colors.transparent,
+                padding: EdgeInsets.all(15),
+                onPressed: () => print("TAP"),
+                child: CircleAvatar(
+                  child: Icon(
+                    Icons.person,
+                    size: 35,
+                  ),
+                  radius: 35,
                 ),
-                radius: 35,
               ),
             ),
             FlatButton(

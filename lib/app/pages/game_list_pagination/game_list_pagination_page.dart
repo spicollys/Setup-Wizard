@@ -1,10 +1,14 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/components/constants.dart';
+import 'package:setup_wizard/app/components/custom_gradient_container_bluegrey.dart';
+import 'package:setup_wizard/app/controllers/favorite_controller.dart';
 import 'package:setup_wizard/app/controllers/log_controller.dart';
 import 'package:setup_wizard/app/models/argument.dart';
 import 'package:setup_wizard/app/services/game_data_firebase_service.dart';
+import 'package:setup_wizard/app/services/user_firebase_service.dart';
 
 class GameListPaginationPage extends StatefulWidget {
   @override
@@ -104,30 +108,39 @@ class _GameListPaginationPageState extends State<GameListPaginationPage> {
             );
           } else if (snapshot.connectionState == ConnectionState.active) {
             if (snapshot.hasData && snapshot.data.length > 0) {
-              return ListView.separated(
-                  shrinkWrap: true,
-                  reverse: false,
-                  itemCount: snapshot.data.length,
-                  controller: _scrollController,
-                  separatorBuilder: (_, index) => Divider(
-                        color: Constants.grey,
-                      ),
-                  itemBuilder: (_, index) {
-                    final Argument documentAsArgument =
-                        Argument(arguments: [snapshot.data[index]]);
-                    return InkWell(
-                      onTap: () => Navigator.pushNamed(context, '/gameInfoPage',
-                          arguments: documentAsArgument),
-                      child: ListTile(
-                        title: Text(
-                          '${snapshot.data[index]['queryName']}',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+              return CustomGradientContainerBlueGrey(
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    reverse: false,
+                    itemCount: snapshot.data.length,
+                    controller: _scrollController,
+                    itemBuilder: (_, index) {
+                      final Argument documentAsArgument =
+                          Argument(arguments: [snapshot.data[index]]);
+                      return InkWell(
+                        onTap: () => Navigator.pushNamed(
+                            context, '/gameInfoPage',
+                            arguments: documentAsArgument),
+                        child: Card(
+                          elevation: 2.0,
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              backgroundImage: NetworkImage('${snapshot.data[index]['headerImage']}'),),
+                            trailing: IconButton(
+                              icon: Icon(Icons.favorite_border),
+                              onPressed: () => Favorite.instance.getFavoriteList(),
+                            ) ,
+                            title: Text(
+                              '${snapshot.data[index]['queryName']}',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Text(
+                                'Release date: ${snapshot.data[index]['releaseDate']}'),
+                          ),
                         ),
-                        subtitle: Text(
-                            'Release date: ${snapshot.data[index]['releaseDate']}'),
-                      ),
-                    );
-                  });
+                      );
+                    }),
+              );
             } else {
               return Center(
                 child: Text('No Data...'),
@@ -140,4 +153,8 @@ class _GameListPaginationPageState extends State<GameListPaginationPage> {
       ),
     );
   }
+
+  // Icon FavoriteSystem(){
+  //   if
+  // }
 }

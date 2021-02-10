@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:setup_wizard/app/interfaces/user_interface.dart';
 
 class UserData implements IUser {
@@ -7,14 +9,20 @@ class UserData implements IUser {
   @override
   String name;
 
-  UserData({this.email, this.name});
+  List<int> listOfFavorite;
+
+  UserData({this.email, this.name, this.listOfFavorite});
 
   UserData.fromJson(Map<String, dynamic> json)
       : email = json['email'],
-        name = json['name'];
+        name = json['name'],
+        listOfFavorite = json['listOfFavorite'] as List<int>;
 
   @override
-  Map<String, dynamic> toJson() => {'email': email, 'name': name};
+  Map<String, dynamic> toJson() {
+    List<int> listOfFavorite = [];
+    return {'email': email, 'name': name, 'listOfFavorite': listOfFavorite};
+  }
 
   @override
   String getName({name}) {
@@ -34,5 +42,13 @@ class UserData implements IUser {
   @override
   void setEmail({email}) {
     this.email = email;
+  }
+
+  List<int> getListOfFavorite({listOfFavorite}) {
+    return listOfFavorite;
+  }
+
+  void setListOfFavorite({listOfFavorite}) {
+    this.listOfFavorite = listOfFavorite;
   }
 }
