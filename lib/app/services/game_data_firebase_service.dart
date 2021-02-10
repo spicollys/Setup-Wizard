@@ -29,9 +29,11 @@ class GameDataFirebaseService implements IFirebaseService {
     await _gameServiceCollection.doc(id).set(value);
   }
 
-  Stream<QuerySnapshot> getCollectionSnapshotByGenre({@required String genre}) {
+  CollectionReference getCollection() => _gameServiceCollection;
+
+  Query getCollectionReferenceByGenre({@required String genre}) {
     return (genre == null)
-        ? _gameServiceCollection.snapshots()
-        : _gameServiceCollection.where(genre, isEqualTo: true).snapshots();
+        ? _gameServiceCollection
+        : _gameServiceCollection.where(genre, isEqualTo: true);
   }
 }

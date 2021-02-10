@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/models/argument.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'constants.dart';
 
@@ -18,15 +19,21 @@ class GeneralHeaderButton extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
         child: RaisedButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+            side: BorderSide(color: Constants.white),
+          ),
           elevation: 8,
-          color: Constants.grey600,
+          color: Constants.cinnamon,
           onPressed: () =>
               Navigator.pushNamed(context, route, arguments: _localArgument),
           child: Center(
             child: Text(
               title,
-              style: TextStyle(
-                  fontSize: 24, letterSpacing: 2, fontWeight: FontWeight.bold),
+              style: GoogleFonts.lato(
+                color: Constants.white,
+                fontSize: 26,
+              ),
             ),
           ),
         ),

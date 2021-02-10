@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:setup_wizard/app/interfaces/general_controller_interface.dart';
 import 'package:setup_wizard/app/models/argument.dart';
 import 'constants.dart';
@@ -14,25 +15,29 @@ class GeneralOptionGrid extends StatelessWidget {
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
       crossAxisCount: 2,
+      childAspectRatio: 2.5,
       children:
           List.generate(controllerInstance.getOptionList().length, (index) {
         Argument _localArgument =
             Argument(arguments: controllerInstance.filterOption(index));
         return Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(5),
           child: RaisedButton(
-            elevation: 8,
-            color: Constants.grey600,
-            onPressed: () => Navigator.pushNamed(context, '/gameListPage',
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            color: Constants.blueGrey600,
+            onPressed: () => Navigator.pushNamed(
+                context, '/gameListPaginationPage',
                 arguments: _localArgument),
             child: FittedBox(
-              fit: BoxFit.fill,
+              fit: BoxFit.fitHeight,
               child: Text(
                 controllerInstance.getOptionList()[index],
-                style: TextStyle(
-                    fontSize: 24,
-                    letterSpacing: 2,
-                    fontWeight: FontWeight.bold),
+                style: GoogleFonts.lato(
+                  fontSize: 24,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),

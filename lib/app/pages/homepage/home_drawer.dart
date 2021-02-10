@@ -1,5 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/components/constants.dart';
 import 'package:setup_wizard/app/models/user_data.dart';
@@ -26,17 +26,33 @@ void _logOut(BuildContext context) {
 
 class _DrawerHomeState extends State<DrawerHome> {
   File _image;
+  String _imageFirebase;
+  Map<String, dynamic> _userDocument;
   final picker = ImagePicker();
+  User _firebaseUser = FirebaseAuth.instance.currentUser;
 
-  Future _updateProfilePicture(File profilePicture) async {
-    User firebaseUser = FirebaseAuth.instance.currentUser;
+  @override
+  void initState() async{
+    super.initState();
 
-    var userSnapshot =
-        await UserFirebaseService.instance.get(id: firebaseUser.uid);
-    var userDocument = userSnapshot.data();
+    await setImage();
+  }
 
+  Future setImage() async {
+    _userDocument = await getUserData();
+    _imageFirebase = _userDocument['profilePicture'];
+  }
+
+  Future<Map<String, dynamic>> getUserData() async {
+    DocumentSnapshot userSnapshot =
+        await UserFirebaseService.instance.get(id: _firebaseUser.uid);
+    return userSnapshot.data();
+  }
+
+  Future _updateProfilePicture(
+      File profilePicture) async {
     UserData userData =
-        new UserData(email: userDocument['email'], name: userDocument['name']);
+        new UserData(email: _userDocument['email'], name: _userDocument['name']);
 
     String filename = 'i' +
         profilePicture
@@ -49,7 +65,7 @@ class _DrawerHomeState extends State<DrawerHome> {
 
     userData.setProfilePicture(profilePicture: downloadUrl);
     await UserFirebaseService.instance
-        .put(id: firebaseUser.uid, value: userData.toJson());
+        .put(id: _firebaseUser.uid, value: userData.toJson());
   }
 
   Future getImage() async {
@@ -88,12 +104,19 @@ class _DrawerHomeState extends State<DrawerHome> {
                           size: 35,
                         )
                       : ClipOval(
-                          child: Image.file(
-                            _image,
-                            fit: BoxFit.cover,
-                            width: 100,
-                            height: 100,
-                          ),
+                          child: _imageFirebase != null
+                              ? Image.network(
+                                  _imageFirebase,
+                                  fit: BoxFit.cover,
+                                  width: 100,
+                                  height: 100,
+                                )
+                              : Image.file(
+                                  _image,
+                                  fit: BoxFit.cover,
+                                  width: 100,
+                                  height: 100,
+                                ),
                         ),
                   radius: 50,
                 ),
