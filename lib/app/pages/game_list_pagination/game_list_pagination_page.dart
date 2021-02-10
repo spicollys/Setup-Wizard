@@ -23,14 +23,27 @@ class _GameListPaginationPageState extends State<GameListPaginationPage> {
   int documentLimit = 20;
   DocumentSnapshot lastDocument;
   ScrollController _scrollController = ScrollController();
+  Map<String, dynamic> fav;
 
   StreamController<List<DocumentSnapshot>> _controller =
       StreamController<List<DocumentSnapshot>>();
 
   Stream<List<DocumentSnapshot>> get _streamController => _controller.stream;
 
+  void favoriteData(){
+    User firebaseUser = FirebaseAuth.instance.currentUser;
+    DocumentReference favoriteRef =
+    FirebaseFirestore.instance.collection('favorite').doc(firebaseUser.uid);
+    favoriteRef.get().then((value) {
+      fav = value.data();
+      setState(() {});
+    });
+  }
+
   @override
   void initState() {
+    favoriteData();
+
     super.initState();
     collectionGameGenre = Future.delayed(Duration.zero, () {
       final Argument receivedArgument =
@@ -125,8 +138,18 @@ class _GameListPaginationPageState extends State<GameListPaginationPage> {
                           elevation: 2.0,
                           child: ListTile(
                             leading: CircleAvatar(
-                              backgroundImage: NetworkImage('${snapshot.data[index]['headerImage']}'),),
-                            trailing: Icon(Icons.favorite_border),
+                              backgroundImage: NetworkImage(
+                                  '${snapshot.data[index]['headerImage']}'),
+                            ),
+                            trailing: IconButton(
+                              icon: isFavoriteIcon(snapshot, index),
+                              onPressed: () {
+                                setState(() {
+                                  favorite(snapshot, index);
+                                  favoriteData();
+                                });
+                              },
+                            ),
                             title: Text(
                               '${snapshot.data[index]['queryName']}',
                               style: TextStyle(fontWeight: FontWeight.bold),
@@ -151,8 +174,23 @@ class _GameListPaginationPageState extends State<GameListPaginationPage> {
     );
   }
 
+  bool isFavorite(AsyncSnapshot snapshot, int index) => fav != null && fav.containsKey(snapshot.data[index]['documentId'].toString()) ? true : false;
 
-  Future<Widget> FavoriteSystem(int id) async{
-    return await Favorite.instance.isInFavoriteList(id) ? Icon(Icons.favorite, color: Colors.red,) : Icon(Icons.favorite_border);
+  Widget isFavoriteIcon(AsyncSnapshot snapshot, int index){
+    if (isFavorite(snapshot, index)){
+      return Icon(Icons.favorite, color: Colors.red,);
+    } else {
+      return Icon(Icons.favorite_border);
+    }
+  }
+
+  void favorite (AsyncSnapshot snapshot, int index){
+    if(isFavorite(snapshot, index)){
+      Favorite.instance.removeItem(snapshot,snapshot.data[index]['documentId']);
+    } else {
+      Favorite.instance
+          .storageFavoriteIntoFirestore(
+          snapshot.data[index]['documentId']);
+    }
   }
 }
