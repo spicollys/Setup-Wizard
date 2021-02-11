@@ -41,13 +41,13 @@ class GameDataFirebaseService implements IFirebaseService {
         : _gameServiceCollection.where(genre, isEqualTo: true);
   }
 
-  List<Query> favoriteCollectionReference() {
-    Map<String, dynamic> favoriteItems = Favorite.instance.getFavoriteData();
-    List list = favoriteItems.keys.toList();
-    List<Query> listOfFavorite = List<Query>();
-    list.forEach((element) {
-      listOfFavorite.add(_gameServiceCollection.where('documentId', isEqualTo: element));
-    });
-    return listOfFavorite;
-  }
+  // List<Query> favoriteCollectionReference() {
+  //   Map<String, dynamic> favoriteItems = Favorite.instance.getFavoriteData() as Map<String, dynamic>;
+  //   List list = favoriteItems.keys.toList();
+  //   List<Query> listOfFavorite = List<Query>();
+  //   list.forEach((element) {
+  //     listOfFavorite.add(_gameServiceCollection.where('documentId', isEqualTo: element));
+  //   });
+  //   return listOfFavorite;
+  // }
 }

@@ -17,75 +17,101 @@ class _FavoritePageState extends State<FavoritePage> {
   bool isLoading = false;
   Map<String, dynamic> fav;
   User firebaseUser = FirebaseAuth.instance.currentUser;
-  Stream<QuerySnapshot> controllerStream;
   CollectionReference favoriteCollection =
-  FirebaseFirestore.instance.collection("favorite");
+      FirebaseFirestore.instance.collection("favorite");
   List list = [];
   List<DocumentReference> listDocument = List<DocumentReference>();
-  List<Future<DocumentSnapshot>> futureDocReference = List<Future<DocumentSnapshot>>();
+  List<Future<DocumentSnapshot>> futureDocReference =
+      List<Future<DocumentSnapshot>>();
+  Future<Map<String, dynamic>> futureItems;
+  Map<String, dynamic> favoriteItems = Map<String, dynamic>();
 
   @override
-  void initState() {
-    Map<String, dynamic> favoriteItems = Favorite.instance.getFavoriteData();
-    list = favoriteItems.keys.toList();
-    list.forEach((index) {
-      listDocument.add(FirebaseFirestore.instance.collection('steam-game-data').doc("$index"));
-    });
+  void initState(){
+    getFavoriteItems();
     setState(() {});
     super.initState();
   }
-
+  void getFavoriteItems(){
+    Favorite.instance.getFavoriteData().then((value) {
+      setState(() {
+        favoriteItems = value;
+        print(favoriteItems);
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    List<Query> querySnapshot =
-    GameDataFirebaseService.instance.favoriteCollectionReference();
+    print("dentro $favoriteItems");
+    list = favoriteItems.keys.toList();
+    list.forEach((index) {
+      listDocument.add(FirebaseFirestore.instance
+          .collection('steam-game-data')
+          .doc("$index"));
+    });
     return Scaffold(
-      appBar:
-          AppBar(title: Text("Favorite List"), leading: Icon(Icons.favorite)),
-      body: CustomGradientContainerBlueGrey(
-        child: ListView.builder(
+        appBar:
+            AppBar(title: Text("Favorite List"), leading: Icon(Icons.favorite)),
+        body: CustomGradientContainerBlueGrey(
+            child: ListView.builder(
           itemCount: listDocument.length,
-          itemBuilder: (_, index){
+          itemBuilder: (_, index) {
             return FutureBuilder(
               future: listDocument[index].get(),
-              builder: (_, snapshot){
-                final Argument documentAsArgument =
-                Argument(arguments: [snapshot.data]);
-                return InkWell(
-                  onTap: () => Navigator.pushNamed(
-                      context, '/gameInfoPage',
-                      arguments: documentAsArgument),
-                  child: Card(
-                    elevation: 2.0,
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                            '${snapshot.data['headerImage']}'),
+              builder: (_, snapshot) {
+                if (snapshot.connectionState == ConnectionState.none) {
+                  return Center(
+                    child: Text('None.'),
+                  );
+                } else if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasData) {
+                    final Argument documentAsArgument =
+                        Argument(arguments: [snapshot.data]);
+                    return InkWell(
+                      onTap: () => Navigator.pushNamed(context, '/gameInfoPage',
+                          arguments: documentAsArgument),
+                      child: Card(
+                        elevation: 2.0,
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage:
+                                NetworkImage('${snapshot.data['headerImage']}'),
+                          ),
+                          // trailing: IconButton(
+                          //   icon: isFavoriteIcon(snapshot, index),
+                          //   onPressed: () {
+                          //     setState(() {
+                          //       favorite(snapshot, index);
+                          //       favoriteData();
+                          //     });
+                          //   },
+                          // ),
+                          title: Text(
+                            '${snapshot.data['queryName']}',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          subtitle: Text(
+                              'Release date: ${snapshot.data['releaseDate']}'),
+                        ),
                       ),
-                      // trailing: IconButton(
-                      //   icon: isFavoriteIcon(snapshot, index),
-                      //   onPressed: () {
-                      //     setState(() {
-                      //       favorite(snapshot, index);
-                      //       favoriteData();
-                      //     });
-                      //   },
-                      // ),
-                      title: Text(
-                        '${snapshot.data['queryName']}',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(
-                          'Release date: ${snapshot.data['releaseDate']}'),
-                    ),
-                  ),
-                );
+                    );
+                  } else {
+                    return Center(
+                      child: Text('No Data...'),
+                    );
+                  }
+                } else {
+                  return Text("return list");
+                }
               },
             );
           },
-        )
-      )
-    );
+        )));
   }
 }

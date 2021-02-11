@@ -9,7 +9,7 @@ class Favorite {
       FirebaseFirestore.instance.collection("favorite");
   User firebaseUser = FirebaseAuth.instance.currentUser;
   List<dynamic> list;
-  Map<String, dynamic> favoriteItems = Map<String, dynamic>();
+  //Map<String, dynamic> favoriteItems = Map<String, dynamic>();
 
   static final Favorite instance = Favorite._();
 
@@ -30,10 +30,11 @@ class Favorite {
     }
   }
 
-  Map<String, dynamic> getFavoriteData() {
+  Future<Map<String, dynamic>> getFavoriteData() async {
+    Map<String, dynamic> favoriteItems = Map<String, dynamic>();
     DocumentReference favoriteRef = favoriteCollection.doc(firebaseUser.uid);
-    favoriteRef.get().then((value) {
-      favoriteItems = value.data();
+    await favoriteRef.get().then((value) {
+      favoriteItems =  value.data();
     });
     return favoriteItems;
   }
