@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/components/custom_gradient_container_bluegrey.dart';
 import 'package:setup_wizard/app/controllers/favorite_controller.dart';
 import 'package:setup_wizard/app/models/argument.dart';
-import 'package:setup_wizard/app/services/game_data_firebase_service.dart';
 
 class FavoritePage extends StatefulWidget {
   @override
@@ -15,14 +14,12 @@ class FavoritePage extends StatefulWidget {
 
 class _FavoritePageState extends State<FavoritePage> {
   bool isLoading = false;
-  Map<String, dynamic> fav;
   User firebaseUser = FirebaseAuth.instance.currentUser;
-  CollectionReference favoriteCollection =
-      FirebaseFirestore.instance.collection("favorite");
+  CollectionReference _favoriteCollection;
   List list = [];
+  Map<String, dynamic> fav;
   List<DocumentReference> listDocument = List<DocumentReference>();
-  List<Future<DocumentSnapshot>> futureDocReference =
-      List<Future<DocumentSnapshot>>();
+  List<Future<DocumentSnapshot>> futureDocReference =List<Future<DocumentSnapshot>>();
   Future<Map<String, dynamic>> futureItems;
   Map<String, dynamic> favoriteItems = Map<String, dynamic>();
 
@@ -33,6 +30,7 @@ class _FavoritePageState extends State<FavoritePage> {
     super.initState();
   }
   void getFavoriteItems(){
+    _favoriteCollection = FirebaseFirestore.instance.collection("favorite");
     Favorite.instance.getFavoriteData().then((value) {
       setState(() {
         favoriteItems = value;
