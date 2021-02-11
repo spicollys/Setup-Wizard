@@ -17,8 +17,8 @@ class FirebaseStorageService implements IFirebaseStorageService {
   }
 
   @override
-  Future<String> get({TaskSnapshot value}) {
-    return value.ref.getDownloadURL();
+  Future<String> get({TaskSnapshot value}) async {
+    return await value.ref.getDownloadURL();
   }
 
   @override

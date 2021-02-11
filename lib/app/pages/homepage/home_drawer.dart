@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/components/constants.dart';
 import 'package:setup_wizard/app/models/user_data.dart';
@@ -53,21 +54,21 @@ class _DrawerHomeState extends State<DrawerHome> {
   }
 
   Future _updateProfilePicture(File profilePicture) async {
-    UserData userData = new UserData(
-        email: _userDocument['email'], name: _userDocument['name']);
+    String pictureUrl;
+    TaskSnapshot snapshot;
 
-    String filename = 'i' +
-        profilePicture
+    UserData userData = new UserData(email: _userDocument['email'], name: _userDocument['name']);
+
+    String filename = 'i' + profilePicture
             .toString()
             .substring(52, profilePicture.toString().length);
-    var snapshot = FirebaseStorageService.instance
-        .put(value: profilePicture, filename: filename);
-    String downloadUrl =
-        await FirebaseStorageService.instance.get(value: snapshot);
 
-    userData.setProfilePicture(profilePicture: downloadUrl);
-    await UserFirebaseService.instance
-        .put(id: _firebaseUser.uid, value: userData.toJson());
+    snapshot = FirebaseStorageService.instance.put(value: profilePicture, filename: filename);
+    pictureUrl = await FirebaseStorageService.instance.get(value: snapshot);
+
+    userData.setProfilePicture(profilePicture: pictureUrl);
+    await UserFirebaseService.instance.put(id: _firebaseUser.uid, value: userData.toJson());
+    setImage();
   }
 
   Future getImage() async {
@@ -76,7 +77,6 @@ class _DrawerHomeState extends State<DrawerHome> {
     if (pickedFile != null) {
       _image = File(pickedFile.path);
       _updateProfilePicture(_image);
-      setImage();
     } else {
       print('No image selected.');
     }
@@ -96,7 +96,7 @@ class _DrawerHomeState extends State<DrawerHome> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Align(
+                Container(
                   alignment: Alignment.center,
                   child: CircleAvatar(
                     radius: 50,
