@@ -42,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
           return null;
         });
         if (user != null) {
-          LogController.logInfo('Signed in with success.');
+          LogController.logInfo('${FirebaseAuth.instance.currentUser} Signed in with success.');
           Navigator.of(context).popAndPushNamed('/homePage');
         }
       }

@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -24,16 +26,8 @@ class _GameInfoPageState extends State<GameInfoPage> {
 
   @override
   void initState() {
-    getFavoriteItems();
+    favoriteData();
     super.initState();
-  }
-
-  void getFavoriteItems() {
-    Favorite.instance.getFavoriteData().then((value) {
-      setState(() {
-        favoriteItems = value;
-      });
-    });
   }
 
   void favoriteData() {
@@ -48,129 +42,94 @@ class _GameInfoPageState extends State<GameInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Argument _receivedArgument =
-        ModalRoute.of(context).settings.arguments;
+    final Argument _receivedArgument = ModalRoute.of(context).settings.arguments;
     final DocumentSnapshot document = _receivedArgument.arguments[0];
-    final List<String> listOfInfo =
-        GameInfoController.instance.listOfInfoValidation(document: document);
+    final List<String> listOfInfo = GameInfoController.instance.listOfInfoValidation(document: document);
 
-    print("dentro $favoriteItems");
-    list = favoriteItems.keys.toList();
-    list.forEach((index) {
-      listDocument.add(FirebaseFirestore.instance
-          .collection('steam-game-data')
-          .doc("$index"));
-    });
     return Scaffold(
       appBar: AppBar(
           title: Text("${document['queryName']}"),
           leading: Icon(Icons.videogame_asset)),
       body: CustomGradientContainerBlueGrey(
-        child: FutureBuilder(
-          future: listDocument["${document['documentId']}" as int].get(),
-          builder: (context, AsyncSnapshot snapshot) {
-            if (snapshot.connectionState == ConnectionState.none) {
-              return Center(
-                child: Text('None.'),
-              );
-            } else if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.hasData) {
-                return SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Container(
-                        constraints: BoxConstraints.expand(
-                          height: 200.0,
-                        ),
-                        padding: EdgeInsets.symmetric(),
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage("${document['headerImage']}"),
-                          ),
-                        ),
-                        child: Stack(
-                          children: <Widget>[
-                            Positioned(
-                              right: 10.0,
-                              bottom: 10.0,
-                              child: IconButton(
-                                icon: isFavoriteIcon(
-                                    snapshot, document['documentId']),
-                                onPressed: () {
-                                  setState(() {
-                                    favorite(snapshot, document['documentId']);
-                                    favoriteData();
-                                  });
-                                },
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      CustomContainerText(
-                        child: Text(
-                          "Minimum Specifications:\n\n"
-                          "Graphic: ${listOfInfo[0]}\n"
-                          "Processor: ${listOfInfo[1]}\n"
-                          "Memory: ${listOfInfo[2]}\n"
-                          "Others Requirements: ${listOfInfo[3]}\n\n\n"
-                          "Recomended Specifications: \n\n"
-                          "Graphic: ${listOfInfo[4]}\n"
-                          "Processor: ${listOfInfo[5]}\n"
-                          "Memory: ${listOfInfo[6]}\n"
-                          "Others Requirements: ${listOfInfo[7]}",
-                        ),
-                      ),
-                      CustomContainerText(
-                        child: Text("Hardwares ranking\n\n"
-                            "Minimum Graphic Ranking: ${document['GraphicsRankingMin']}\n"
-                            "Recommended Graphic Ranking: ${document['GraphicsRankingRec']}\n\n"
-                            "Minimum Memory Ranking: ${document['MemoryRankingMin']}\n"
-                            "Recommended Memory Ranking: ${document['MemoryRankingRec']}\n\n"
-                            "Minimum Processor Ranking: ${document['ProcessorRankingMinAdjusted']}\n"
-                            "Recommended Processor Ranking: ${document['ProcessorRankingRecAdjusted']}"),
-                      ),
-                      CustomContainerText(
-                        child: ExpandableText(
-                          document['aboutText'],
-                          trimLines: 3,
-                        ),
-                      ),
-                      CustomContainerText(
-                        child: Text(
-                            "Supported languages: ${document['supportedLanguages']}"),
-                      ),
-                      CustomContainerText(
-                        child: Text("Release Date: ${document['releaseDate']}"),
-                      )
-                    ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                constraints: BoxConstraints.expand(
+                  height: 200.0,
+                ),
+                padding: EdgeInsets.symmetric(),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage("${document['headerImage']}"),
                   ),
-                );
-              } else {
-                return Center(
-                  child: Text('No Data...'),
-                );
-              }
-            } else {
-              return Text("return list");
-            }
-          },
+                ),
+                child: Stack(
+                  children: <Widget>[
+                    Positioned(
+                      right: 10.0,
+                      bottom: 10.0,
+                      child: IconButton(
+                        icon: isFavoriteIcon(document['documentId'] as int),
+                        onPressed: () {
+                          setState(() {
+                            favorite(document['documentId'] as int);
+                            favoriteData();
+                          });
+                        },
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              CustomContainerText(
+                child: Text(
+                  "Minimum Specifications:\n\n"
+                  "Graphic: ${listOfInfo[0]}\n"
+                  "Processor: ${listOfInfo[1]}\n"
+                  "Memory: ${listOfInfo[2]}\n"
+                  "Others Requirements: ${listOfInfo[3]}\n\n\n"
+                  "Recomended Specifications: \n\n"
+                  "Graphic: ${listOfInfo[4]}\n"
+                  "Processor: ${listOfInfo[5]}\n"
+                  "Memory: ${listOfInfo[6]}\n"
+                  "Others Requirements: ${listOfInfo[7]}",
+                ),
+              ),
+              CustomContainerText(
+                child: Text("Hardwares ranking\n\n"
+                    "Minimum Graphic Ranking: ${document['GraphicsRankingMin']}\n"
+                    "Recommended Graphic Ranking: ${document['GraphicsRankingRec']}\n\n"
+                    "Minimum Memory Ranking: ${document['MemoryRankingMin']}\n"
+                    "Recommended Memory Ranking: ${document['MemoryRankingRec']}\n\n"
+                    "Minimum Processor Ranking: ${document['ProcessorRankingMinAdjusted']}\n"
+                    "Recommended Processor Ranking: ${document['ProcessorRankingRecAdjusted']}"),
+              ),
+              CustomContainerText(
+                child: ExpandableText(
+                  document['aboutText'],
+                  trimLines: 3,
+                ),
+              ),
+              CustomContainerText(
+                child: Text(
+                    "Supported languages: ${document['supportedLanguages']}"),
+              ),
+              CustomContainerText(
+                child: Text("Release Date: ${document['releaseDate']}"),
+              )
+            ],
+          ),
         ),
       ),
     );
   }
 
-  bool isFavorite(AsyncSnapshot snapshot, int index) => fav != null &&
-          fav.containsKey(snapshot.data[index]['documentId'].toString())
-      ? true
-      : false;
+  bool isFavorite(int index) =>
+      fav != null && fav.containsKey(index) ? true : false;
 
-  Widget isFavoriteIcon(AsyncSnapshot snapshot, int index) {
-    if (isFavorite(snapshot, index)) {
+  Widget isFavoriteIcon(int index) {
+    if (isFavorite(index)) {
       return Icon(
         Icons.favorite,
         color: Colors.red,
@@ -180,13 +139,11 @@ class _GameInfoPageState extends State<GameInfoPage> {
     }
   }
 
-  void favorite(AsyncSnapshot snapshot, int index) {
-    if (isFavorite(snapshot, index)) {
-      Favorite.instance
-          .removeItem(snapshot, snapshot.data[index]['documentId']);
+  void favorite(int index) {
+    if (isFavorite(index)) {
+      Favorite.instance.removeItem(index);
     } else {
-      Favorite.instance
-          .storageFavoriteIntoFirestore(snapshot.data[index]['documentId']);
+      Favorite.instance.storageFavoriteIntoFirestore(index);
     }
   }
 }
