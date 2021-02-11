@@ -1,11 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:setup_wizard/app/controllers/favorite_controller.dart';
 import 'package:setup_wizard/app/interfaces/firebase_service_interface.dart';
 
 class GameDataFirebaseService implements IFirebaseService {
   final CollectionReference _gameServiceCollection =
       IFirebaseService.firebaseInstance.collection("steam-game-data");
-
+  final CollectionReference favoriteCollection =
+      FirebaseFirestore.instance.collection("favorite");
+  User firebaseUser = FirebaseAuth.instance.currentUser;
   static final GameDataFirebaseService instance =
       GameDataFirebaseService._(); //singleton
 
@@ -35,5 +39,15 @@ class GameDataFirebaseService implements IFirebaseService {
     return (genre == null)
         ? _gameServiceCollection
         : _gameServiceCollection.where(genre, isEqualTo: true);
+  }
+
+  List<Query> favoriteCollectionReference() {
+    Map<String, dynamic> favoriteItems = Favorite.instance.getFavoriteData();
+    List list = favoriteItems.keys.toList();
+    List<Query> listOfFavorite = List<Query>();
+    list.forEach((element) {
+      listOfFavorite.add(_gameServiceCollection.where('documentId', isEqualTo: element));
+    });
+    return listOfFavorite;
   }
 }
