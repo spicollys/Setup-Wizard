@@ -1,7 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/components/constants.dart';
-import 'package:setup_wizard/app/controllers/favorite_controller.dart';
+import 'package:setup_wizard/app/models/user_data.dart';
 import 'package:setup_wizard/app/services/auth/auth.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:setup_wizard/app/services/firebase_storage.dart';
+import 'package:setup_wizard/app/services/user_firebase_service.dart';
+import 'dart:io';
 
 class DrawerHome extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
@@ -19,7 +26,60 @@ void _logOut(BuildContext context) {
 }
 
 class _DrawerHomeState extends State<DrawerHome> {
+  File _image;
+  User _firebaseUser;
+  String _imageFirebase;
+  final picker = ImagePicker();
+  Map<String, dynamic> _userDocument;
 
+  @override
+  void initState() {
+    super.initState();
+    setImage();
+  }
+
+  Future setImage() async {
+    _userDocument = await getUserData();
+    _imageFirebase = _userDocument['profilePicture'];
+
+    setState(() {});
+  }
+
+  Future<Map<String, dynamic>> getUserData() async {
+    _firebaseUser = FirebaseAuth.instance.currentUser;
+    DocumentSnapshot userSnapshot =
+        await UserFirebaseService.instance.get(id: _firebaseUser.uid);
+    return userSnapshot.data();
+  }
+
+  Future _updateProfilePicture(File profilePicture) async {
+    String pictureUrl;
+    TaskSnapshot snapshot;
+
+    UserData userData = new UserData(email: _userDocument['email'], name: _userDocument['name']);
+
+    String filename = 'i' + profilePicture
+            .toString()
+            .substring(52, profilePicture.toString().length);
+
+    snapshot = FirebaseStorageService.instance.put(value: profilePicture, filename: filename);
+    pictureUrl = await FirebaseStorageService.instance.get(value: snapshot);
+
+    userData.setProfilePicture(profilePicture: pictureUrl);
+    await UserFirebaseService.instance.put(id: _firebaseUser.uid, value: userData.toJson());
+    setImage();
+  }
+
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      _image = File(pickedFile.path);
+      _updateProfilePicture(_image);
+    } else {
+      print('No image selected.');
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -31,26 +91,40 @@ class _DrawerHomeState extends State<DrawerHome> {
             SizedBox(
               height: 50,
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 100),
-              child: FlatButton(
-                splashColor: Colors.transparent,
-                padding: EdgeInsets.all(15),
-                onPressed: () => print("TAP"),
-                child: CircleAvatar(
-                  child: Icon(
-                    Icons.person,
-                    size: 35,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  alignment: Alignment.center,
+                  child: CircleAvatar(
+                    radius: 50,
+                    backgroundColor: Colors.white,
+                    child: _imageFirebase == null
+                        ? Icon(
+                            Icons.person,
+                            size: 35,
+                          )
+                        : ClipOval(
+                            child: Image.network(
+                              _imageFirebase,
+                              fit: BoxFit.cover,
+                              width: 100,
+                              height: 100,
+                            ),
+                          ),
                   ),
-                  radius: 35,
                 ),
-              ),
+                FlatButton(
+                  child: Icon(Icons.settings),
+                  onPressed: getImage,
+                ),
+              ],
             ),
             FlatButton(
               padding: EdgeInsets.only(top: 5, bottom: 5),
               onPressed: () {},
               child: ListTile(
-                title: Text("My Favorite Games"),
+                title: Text("Favorite Games"),
                 leading: Icon(Icons.videogame_asset),
               ),
             ),
