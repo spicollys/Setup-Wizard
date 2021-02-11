@@ -9,21 +9,20 @@ class Favorite {
       FirebaseFirestore.instance.collection("favorite");
   User firebaseUser = FirebaseAuth.instance.currentUser;
   List<dynamic> list;
-  Map<String, dynamic> fav;
+  //Map<String, dynamic> favoriteItems = Map<String, dynamic>();
 
   static final Favorite instance = Favorite._();
 
   Favorite._();
 
-  Future<List<DocumentSnapshot>> returnList(
-      DocumentReference documentReference) async {
-    return await documentReference.snapshots().toList();
-  }
+  // Future<List<DocumentSnapshot>> returnList(
+  //     DocumentReference documentReference) async {
+  //   return await documentReference.snapshots().toList();
+  // }
 
-  void storageFavoriteIntoFirestore(int id)  {
-    DocumentReference documentReference = FirebaseFirestore.instance
-        .collection('favorite')
-        .doc(firebaseUser.uid);
+  void storageFavoriteIntoFirestore(int id) {
+    DocumentReference documentReference =
+        favoriteCollection.doc(firebaseUser.uid);
     if (documentReference != null) {
       documentReference.update({"$id": true});
     } else {
@@ -31,17 +30,18 @@ class Favorite {
     }
   }
 
-  getFavoriteData(){
-    DocumentReference favoriteRef =
-    FirebaseFirestore.instance.collection('favorite').doc(firebaseUser.uid);
-    favoriteRef.get().then((value) {
-      fav = value.data();
+  Future<Map<String, dynamic>> getFavoriteData() async {
+    Map<String, dynamic> favoriteItems = Map<String, dynamic>();
+    DocumentReference favoriteRef = favoriteCollection.doc(firebaseUser.uid);
+    await favoriteRef.get().then((value) {
+      favoriteItems =  value.data();
     });
+    return favoriteItems;
   }
 
-  bool isFavorite(AsyncSnapshot snapshot, int index) => fav != null && fav.containsKey(snapshot.data[index]['documentId'].toString()) ? true : false;
-
-  void removeItem(AsyncSnapshot snapshot, int index)  {
-    favoriteCollection.doc(firebaseUser.uid).update({"$index": FieldValue.delete()});
+  void removeItem(AsyncSnapshot snapshot, int index) {
+    favoriteCollection
+        .doc(firebaseUser.uid)
+        .update({"$index": FieldValue.delete()});
   }
 }

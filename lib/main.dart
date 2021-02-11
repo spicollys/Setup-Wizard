@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:setup_wizard/app/pages/%20favorite/favorite_page.dart';
 import 'package:setup_wizard/app/pages/game_genre/game_genre_page.dart';
 import 'package:setup_wizard/app/pages/game_info/game_info_page.dart';
 import 'package:setup_wizard/app/pages/game_list_pagination/game_list_pagination_page.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
           '/resetPasswordPage': (context) => ResetPasswordPage(),
           '/gameInfoPage': (context) => GameInfoPage(),
           '/homePage': (context) => HomePage(),
+          '/favoritePage': (context) => FavoritePage(),
           '/hardwareCategoryPage': (context) => null,
         });
   }
