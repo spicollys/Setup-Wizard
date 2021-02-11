@@ -27,15 +27,14 @@ void _logOut(BuildContext context) {
 
 class _DrawerHomeState extends State<DrawerHome> {
   File _image;
-  String _imageFirebase;
-  Map<String, dynamic> _userDocument;
-  final picker = ImagePicker();
   User _firebaseUser;
+  String _imageFirebase;
+  final picker = ImagePicker();
+  Map<String, dynamic> _userDocument;
 
   @override
   void initState() {
     super.initState();
-
     setImage();
   }
 
@@ -126,7 +125,7 @@ class _DrawerHomeState extends State<DrawerHome> {
               padding: EdgeInsets.only(top: 5, bottom: 5),
               onPressed: () => null,
               child: ListTile(
-                title: Text("My Saved Games"),
+                title: Text("Favorite Games"),
                 leading: Icon(Icons.videogame_asset),
               ),
             ),
