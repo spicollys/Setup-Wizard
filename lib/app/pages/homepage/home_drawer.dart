@@ -80,7 +80,6 @@ class _DrawerHomeState extends State<DrawerHome> {
       print('No image selected.');
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -123,7 +122,7 @@ class _DrawerHomeState extends State<DrawerHome> {
             ),
             FlatButton(
               padding: EdgeInsets.only(top: 5, bottom: 5),
-              onPressed: () => null,
+              onPressed: () {},
               child: ListTile(
                 title: Text("Favorite Games"),
                 leading: Icon(Icons.videogame_asset),
@@ -131,7 +130,7 @@ class _DrawerHomeState extends State<DrawerHome> {
             ),
             FlatButton(
               padding: EdgeInsets.only(top: 5, bottom: 5),
-              onPressed: () => null,
+              onPressed: () => Navigator.pushNamed(context, '/favoritePage'),
               child: ListTile(
                 title: Text("Favorite Setups"),
                 leading: Icon(Icons.star),

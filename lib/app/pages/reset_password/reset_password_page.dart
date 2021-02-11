@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/components/constants.dart';
-import 'package:setup_wizard/app/components/custom_gradient_container.dart';
+import 'package:setup_wizard/app/components/custom_gradient_container_grey.dart';
 import 'package:setup_wizard/app/components/custom_submit_button.dart';
 import 'package:setup_wizard/app/components/logo_setup_wizard.dart';
 import 'package:setup_wizard/app/components/text_field_container.dart';
@@ -19,7 +19,7 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: CustomGradientContainer(
+        child: CustomGradientContainerGrey(
           child: Column(
             children: [
               Flexible(flex: 2, child: LogoSetupWizard()),

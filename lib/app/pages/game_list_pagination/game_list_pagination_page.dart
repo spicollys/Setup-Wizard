@@ -1,10 +1,14 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/components/constants.dart';
+import 'package:setup_wizard/app/components/custom_gradient_container_bluegrey.dart';
+import 'package:setup_wizard/app/controllers/favorite_controller.dart';
 import 'package:setup_wizard/app/controllers/log_controller.dart';
 import 'package:setup_wizard/app/models/argument.dart';
 import 'package:setup_wizard/app/services/game_data_firebase_service.dart';
+import 'package:setup_wizard/app/services/user_firebase_service.dart';
 
 class GameListPaginationPage extends StatefulWidget {
   @override
@@ -19,14 +23,27 @@ class _GameListPaginationPageState extends State<GameListPaginationPage> {
   int documentLimit = 20;
   DocumentSnapshot lastDocument;
   ScrollController _scrollController = ScrollController();
+  Map<String, dynamic> fav;
 
   StreamController<List<DocumentSnapshot>> _controller =
       StreamController<List<DocumentSnapshot>>();
 
   Stream<List<DocumentSnapshot>> get _streamController => _controller.stream;
 
+  void favoriteData(){
+    User firebaseUser = FirebaseAuth.instance.currentUser;
+    DocumentReference favoriteRef =
+    FirebaseFirestore.instance.collection('favorite').doc(firebaseUser.uid);
+    favoriteRef.get().then((value) {
+      fav = value.data();
+      setState(() {});
+    });
+  }
+
   @override
   void initState() {
+    favoriteData();
+
     super.initState();
     collectionGameGenre = Future.delayed(Duration.zero, () {
       final Argument receivedArgument =
@@ -104,30 +121,46 @@ class _GameListPaginationPageState extends State<GameListPaginationPage> {
             );
           } else if (snapshot.connectionState == ConnectionState.active) {
             if (snapshot.hasData && snapshot.data.length > 0) {
-              return ListView.separated(
-                  shrinkWrap: true,
-                  reverse: false,
-                  itemCount: snapshot.data.length,
-                  controller: _scrollController,
-                  separatorBuilder: (_, index) => Divider(
-                        color: Constants.grey,
-                      ),
-                  itemBuilder: (_, index) {
-                    final Argument documentAsArgument =
-                        Argument(arguments: [snapshot.data[index]]);
-                    return InkWell(
-                      onTap: () => Navigator.pushNamed(context, '/gameInfoPage',
-                          arguments: documentAsArgument),
-                      child: ListTile(
-                        title: Text(
-                          '${snapshot.data[index]['queryName']}',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+              return CustomGradientContainerBlueGrey(
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    reverse: false,
+                    itemCount: snapshot.data.length,
+                    controller: _scrollController,
+                    itemBuilder: (_, index) {
+                      final Argument documentAsArgument =
+                          Argument(arguments: [snapshot.data[index]]);
+                      return InkWell(
+                        onTap: () => Navigator.pushNamed(
+                            context, '/gameInfoPage',
+                            arguments: documentAsArgument),
+                        child: Card(
+                          elevation: 2.0,
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                  '${snapshot.data[index]['headerImage']}'),
+                            ),
+                            trailing: IconButton(
+                              icon: isFavoriteIcon(snapshot, index),
+                              onPressed: () {
+                                setState(() {
+                                  favorite(snapshot, index);
+                                  favoriteData();
+                                });
+                              },
+                            ),
+                            title: Text(
+                              '${snapshot.data[index]['queryName']}',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Text(
+                                'Release date: ${snapshot.data[index]['releaseDate']}'),
+                          ),
                         ),
-                        subtitle: Text(
-                            'Release date: ${snapshot.data[index]['releaseDate']}'),
-                      ),
-                    );
-                  });
+                      );
+                    }),
+              );
             } else {
               return Center(
                 child: Text('No Data...'),
@@ -139,5 +172,25 @@ class _GameListPaginationPageState extends State<GameListPaginationPage> {
         },
       ),
     );
+  }
+
+  bool isFavorite(AsyncSnapshot snapshot, int index) => fav != null && fav.containsKey(snapshot.data[index]['documentId'].toString()) ? true : false;
+
+  Widget isFavoriteIcon(AsyncSnapshot snapshot, int index){
+    if (isFavorite(snapshot, index)){
+      return Icon(Icons.favorite, color: Colors.red,);
+    } else {
+      return Icon(Icons.favorite_border);
+    }
+  }
+
+  void favorite (AsyncSnapshot snapshot, int index){
+    if(isFavorite(snapshot, index)){
+      Favorite.instance.removeItem(snapshot.data[index]['documentId']);
+    } else {
+      Favorite.instance
+          .storageFavoriteIntoFirestore(
+          snapshot.data[index]['documentId']);
+    }
   }
 }

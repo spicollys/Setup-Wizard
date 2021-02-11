@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class Constants {
   static const Color blueGrey100 = Color(0xFFCFD8DC);
   static const Color blueGrey200 = Color(0xFFB0BEC5);
+  static const Color blueGrey300 = Color(0xFF90A4AE);
   static const Color blueGrey400 = Color(0xFF78909C);
   static const Color blueGrey600 = Color(0xFF546E7A);
   static const Color blueGrey700 = Color(0xFF455A64);
@@ -16,6 +17,9 @@ class Constants {
   static const Color indigo300 = Color(0xFF7986CB);
   static const Color lightBlue100 = Color(0xFF6FADC1);
   static const Color lightBlue200 = Color(0xFF81D4FA);
+  static const Color cyan800 = Color(0xFF00838F);
+  static const Color cyan900 = Color(0XFF006064);
+  static const Color tealA700 = Color(0XFF00BFA5);
   static const Color cinnamon = Color(0xFFAB480A);
 
   static final LinearGradient blueGreyGradientPattern = LinearGradient(

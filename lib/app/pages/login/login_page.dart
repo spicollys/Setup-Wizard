@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:setup_wizard/app/components/constants.dart';
-import 'package:setup_wizard/app/components/custom_gradient_container.dart';
+import 'package:setup_wizard/app/components/custom_gradient_container_grey.dart';
 import 'package:setup_wizard/app/components/custom_inkwell.dart';
 import 'package:setup_wizard/app/components/custom_flushbar.dart';
 import 'package:setup_wizard/app/components/custom_submit_button.dart';
@@ -42,15 +42,15 @@ class _LoginPageState extends State<LoginPage> {
           return null;
         });
         if (user != null) {
-          LogController.logInfo('Signed in with success.');
-          Navigator.of(context).popAndPushNamed('/gameGenrePage');
+          LogController.logInfo('${FirebaseAuth.instance.currentUser} Signed in with success.');
+          Navigator.of(context).popAndPushNamed('/homePage');
         }
       }
     }
 
     return Scaffold(
       body: SafeArea(
-        child: CustomGradientContainer(
+        child: CustomGradientContainerGrey(
           child: Column(
             children: [
               Flexible(flex: 2, child: LogoSetupWizard()),
