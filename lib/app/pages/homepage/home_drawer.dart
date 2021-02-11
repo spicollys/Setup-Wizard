@@ -64,6 +64,7 @@ class _DrawerHomeState extends State<DrawerHome> {
 
     snapshot = FirebaseStorageService.instance.put(value: profilePicture, filename: filename);
     pictureUrl = await FirebaseStorageService.instance.get(value: snapshot);
+    print(pictureUrl);
 
     userData.setProfilePicture(profilePicture: pictureUrl);
     await UserFirebaseService.instance.put(id: _firebaseUser.uid, value: userData.toJson());
@@ -122,7 +123,7 @@ class _DrawerHomeState extends State<DrawerHome> {
             ),
             FlatButton(
               padding: EdgeInsets.only(top: 5, bottom: 5),
-              onPressed: () {},
+              onPressed: () => Navigator.pushNamed(context, '/favoritePage'),
               child: ListTile(
                 title: Text("Favorite Games"),
                 leading: Icon(Icons.videogame_asset),
@@ -130,7 +131,7 @@ class _DrawerHomeState extends State<DrawerHome> {
             ),
             FlatButton(
               padding: EdgeInsets.only(top: 5, bottom: 5),
-              onPressed: () => Navigator.pushNamed(context, '/favoritePage'),
+              onPressed: () => null,
               child: ListTile(
                 title: Text("Favorite Setups"),
                 leading: Icon(Icons.star),

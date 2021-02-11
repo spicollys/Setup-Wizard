@@ -17,7 +17,7 @@ class GameInfoPage extends StatefulWidget {
 
 class _GameInfoPageState extends State<GameInfoPage> {
   _GameInfoPageState();
-  Map<String, dynamic> fav;
+  Map<String, dynamic> fav = Map<String, dynamic>();
   Map<String, dynamic> favoriteItems = Map<String, dynamic>();
   List<DocumentReference> listDocument = List<DocumentReference>();
   List list = [];
@@ -40,9 +40,11 @@ class _GameInfoPageState extends State<GameInfoPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Argument _receivedArgument = ModalRoute.of(context).settings.arguments;
+    final Argument _receivedArgument =
+        ModalRoute.of(context).settings.arguments;
     final DocumentSnapshot document = _receivedArgument.arguments[0];
-    final List<String> listOfInfo = GameInfoController.instance.listOfInfoValidation(document: document);
+    final List<String> listOfInfo =
+        GameInfoController.instance.listOfInfoValidation(document: document);
 
     return Scaffold(
       appBar: AppBar(
@@ -68,10 +70,10 @@ class _GameInfoPageState extends State<GameInfoPage> {
                       right: 10.0,
                       bottom: 10.0,
                       child: IconButton(
-                        icon: isFavoriteIcon(document['documentId'] as int),
+                        icon: isFavoriteIcon(document['documentId']),
                         onPressed: () {
                           setState(() {
-                            favorite(document['documentId'] as int);
+                            favorite(document['documentId']);
                             favoriteData();
                           });
                         },
@@ -124,7 +126,7 @@ class _GameInfoPageState extends State<GameInfoPage> {
   }
 
   bool isFavorite(int index) =>
-      fav != null && fav.containsKey(index) ? true : false;
+      fav != null && fav.containsKey(index.toString()) ? true : false;
 
   Widget isFavoriteIcon(int index) {
     if (isFavorite(index)) {
@@ -135,9 +137,10 @@ class _GameInfoPageState extends State<GameInfoPage> {
       );
     } else {
       return Icon(
-        Icons.favorite, 
-        color: Colors.white, 
-        size: 40.0,);
+        Icons.favorite,
+        color: Colors.white,
+        size: 40.0,
+      );
     }
   }
 
