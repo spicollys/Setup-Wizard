@@ -41,7 +41,8 @@ class _RegisterPageState extends State<RegisterPage> {
       });
       if (user != null) {
         LogController.logInfo('Signed up with success.');
-        Navigator.of(context).popAndPushNamed('/loginPage');
+        Auth.instance.signIn(_email, _password);
+        Navigator.of(context).popAndPushNamed('/homePage');
       }
     }
   }

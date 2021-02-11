@@ -1,12 +1,9 @@
-import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/components/custom_gradient_container_bluegrey.dart';
 import 'package:setup_wizard/app/controllers/favorite_controller.dart';
 import 'package:setup_wizard/app/models/argument.dart';
-import 'package:setup_wizard/app/services/game_data_firebase_service.dart';
 
 class FavoritePage extends StatefulWidget {
   @override
@@ -14,42 +11,40 @@ class FavoritePage extends StatefulWidget {
 }
 
 class _FavoritePageState extends State<FavoritePage> {
-  bool isLoading = false;
-  Map<String, dynamic> fav;
   User firebaseUser = FirebaseAuth.instance.currentUser;
   CollectionReference favoriteCollection =
       FirebaseFirestore.instance.collection("favorite");
-  List list = [];
+  List<dynamic> list = [];
   List<DocumentReference> listDocument = List<DocumentReference>();
-  List<Future<DocumentSnapshot>> futureDocReference =
-      List<Future<DocumentSnapshot>>();
-  Future<Map<String, dynamic>> futureItems;
   Map<String, dynamic> favoriteItems = Map<String, dynamic>();
 
   @override
-  void initState(){
-    getFavoriteItems();
-    setState(() {});
+  void initState() {
+    Favorite.instance
+        .getFavoriteData()
+        .then((value) => setState(() => favoriteItems = value));
     super.initState();
   }
-  void getFavoriteItems(){
-    Favorite.instance.getFavoriteData().then((value) {
-      setState(() {
-        favoriteItems = value;
-        print(favoriteItems);
-      });
-    });
-  }
 
-  @override
-  Widget build(BuildContext context) {
-    print("dentro $favoriteItems");
+  void loadingList() {
     list = favoriteItems.keys.toList();
     list.forEach((index) {
       listDocument.add(FirebaseFirestore.instance
           .collection('steam-game-data')
           .doc("$index"));
     });
+  }
+
+  void removeFavoriteItem({int index, int id}) {
+    Favorite.instance.removeItem(id);
+    listDocument.removeAt(index);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (listDocument.isEmpty && favoriteItems != null) {
+      loadingList();
+    }
     return Scaffold(
         appBar:
             AppBar(title: Text("Favorite List"), leading: Icon(Icons.favorite)),
@@ -83,15 +78,19 @@ class _FavoritePageState extends State<FavoritePage> {
                             backgroundImage:
                                 NetworkImage('${snapshot.data['headerImage']}'),
                           ),
-                          // trailing: IconButton(
-                          //   icon: isFavoriteIcon(snapshot, index),
-                          //   onPressed: () {
-                          //     setState(() {
-                          //       favorite(snapshot, index);
-                          //       favoriteData();
-                          //     });
-                          //   },
-                          // ),
+                          trailing: IconButton(
+                            icon: Icon(
+                              Icons.favorite,
+                              color: Colors.red,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                removeFavoriteItem(
+                                    index: index,
+                                    id: snapshot.data['documentId']);
+                              });
+                            },
+                          ),
                           title: Text(
                             '${snapshot.data['queryName']}',
                             style: TextStyle(fontWeight: FontWeight.bold),

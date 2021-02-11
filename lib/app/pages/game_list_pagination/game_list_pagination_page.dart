@@ -186,7 +186,7 @@ class _GameListPaginationPageState extends State<GameListPaginationPage> {
 
   void favorite (AsyncSnapshot snapshot, int index){
     if(isFavorite(snapshot, index)){
-      Favorite.instance.removeItem(snapshot,snapshot.data[index]['documentId']);
+      Favorite.instance.removeItem(snapshot.data[index]['documentId']);
     } else {
       Favorite.instance
           .storageFavoriteIntoFirestore(
