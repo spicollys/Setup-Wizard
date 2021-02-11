@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -133,9 +131,13 @@ class _GameInfoPageState extends State<GameInfoPage> {
       return Icon(
         Icons.favorite,
         color: Colors.red,
+        size: 40.0,
       );
     } else {
-      return Icon(Icons.favorite_border);
+      return Icon(
+        Icons.favorite, 
+        color: Colors.white, 
+        size: 40.0,);
     }
   }
 
