@@ -48,5 +48,4 @@ class Auth {
   Future<void> resetPassword(String email) async {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
-
 }

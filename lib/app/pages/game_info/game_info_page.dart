@@ -1,5 +1,4 @@
 
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -43,9 +42,11 @@ class _GameInfoPageState extends State<GameInfoPage> {
 
   @override
   Widget build(BuildContext context) {
+
     final Argument _receivedArgument = ModalRoute.of(context).settings.arguments;
     //final DocumentSnapshot document = _receivedArgument.arguments[0];
     final List<String> listOfInfo = GameInfoController.instance.listOfInfoValidation(document: document);
+
 
     return Scaffold(
       appBar: AppBar(
@@ -71,10 +72,10 @@ class _GameInfoPageState extends State<GameInfoPage> {
                       right: 10.0,
                       bottom: 10.0,
                       child: IconButton(
-                        icon: isFavoriteIcon(document['documentId'] as int),
+                        icon: isFavoriteIcon(document['documentId']),
                         onPressed: () {
                           setState(() {
-                            favorite(document['documentId'] as int);
+                            favorite(document['documentId']);
                             favoriteData();
                           });
                         },
@@ -133,6 +134,7 @@ class _GameInfoPageState extends State<GameInfoPage> {
     return entry != null ? entry.value : false;
   }
 
+
   Widget isFavoriteIcon(int id) {
     if (isFavorite(id)) {
       return Icon(
@@ -142,9 +144,10 @@ class _GameInfoPageState extends State<GameInfoPage> {
       );
     } else {
       return Icon(
-        Icons.favorite, 
-        color: Colors.white, 
-        size: 40.0,);
+        Icons.favorite,
+        color: Colors.white,
+        size: 40.0,
+      );
     }
   }
 
