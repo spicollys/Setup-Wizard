@@ -54,20 +54,17 @@ class _DrawerHomeState extends State<DrawerHome> {
 
   Future _updateProfilePicture(File profilePicture) async {
     String pictureUrl;
-    TaskSnapshot snapshot;
 
     UserData userData = new UserData(email: _userDocument['email'], name: _userDocument['name']);
+    String filename = 'profilePictureUser=' + _userDocument['email'].toString();
 
-    String filename = 'i' + profilePicture
-            .toString()
-            .substring(52, profilePicture.toString().length);
-
-    snapshot = FirebaseStorageService.instance.put(value: profilePicture, filename: filename);
-    pictureUrl = await FirebaseStorageService.instance.get(value: snapshot);
-    print(pictureUrl);
+    await FirebaseStorageService.instance
+        .put(value: profilePicture, filename: filename);
+    pictureUrl = await FirebaseStorageService.instance.get(filename: filename);
 
     userData.setProfilePicture(profilePicture: pictureUrl);
-    await UserFirebaseService.instance.put(id: _firebaseUser.uid, value: userData.toJson());
+    await UserFirebaseService.instance
+        .put(id: _firebaseUser.uid, value: userData.toJson());
     setImage();
   }
 
@@ -81,6 +78,7 @@ class _DrawerHomeState extends State<DrawerHome> {
       print('No image selected.');
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -116,7 +114,7 @@ class _DrawerHomeState extends State<DrawerHome> {
                   ),
                 ),
                 FlatButton(
-                  child: Icon(Icons.settings),
+                  child: Icon(Icons.photo_camera),
                   onPressed: getImage,
                 ),
               ],

@@ -44,7 +44,6 @@ class _GameInfoPageState extends State<GameInfoPage> {
   Widget build(BuildContext context) {
 
     final Argument _receivedArgument = ModalRoute.of(context).settings.arguments;
-    //final DocumentSnapshot document = _receivedArgument.arguments[0];
     final List<String> listOfInfo = GameInfoController.instance.listOfInfoValidation(document: document);
 
 

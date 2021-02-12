@@ -17,12 +17,12 @@ class FirebaseStorageService implements IFirebaseStorageService {
   }
 
   @override
-  Future<String> get({TaskSnapshot value}) async {
-    return await value.ref.getDownloadURL();
+  Future<String> get({String filename}) async {
+    return await _firebaseStorage.ref().child('$filename').getDownloadURL();
   }
 
   @override
-  TaskSnapshot put({File value, String filename}) {
-    return _firebaseStorage.ref().child('$filename').putFile(value).snapshot;
+  Future put({File value, String filename}) async{
+    await _firebaseStorage.ref().child('$filename').putFile(value);
   }
 }
