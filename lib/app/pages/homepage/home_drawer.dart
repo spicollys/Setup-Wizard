@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/components/constants.dart';
-import 'package:setup_wizard/app/controllers/favorite_controller.dart';
 import 'package:setup_wizard/app/services/auth/auth.dart';
 
 class DrawerHome extends StatefulWidget {

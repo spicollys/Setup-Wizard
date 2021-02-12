@@ -25,12 +25,10 @@ class Favorite {
     User firebaseUser = FirebaseAuth.instance.currentUser;
     Map<String, dynamic> favoriteItems = Map<String, dynamic>();
     DocumentReference favoriteRef = favoriteCollection.doc(firebaseUser.uid);
-    print(FirebaseAuth.instance.currentUser.uid);
     await favoriteRef.get().then((value) {
       favoriteItems =  value.data();
     });
     favoriteItems.removeWhere((key, value) => value == false);
-    print(favoriteItems);
     return favoriteItems;
   }
 

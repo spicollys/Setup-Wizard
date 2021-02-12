@@ -1,24 +1,27 @@
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/components/custom_container_text.dart';
 import 'package:setup_wizard/app/components/custom_gradient_container_bluegrey.dart';
 import 'package:setup_wizard/app/controllers/expandable_text_conroller.dart';
-import 'package:setup_wizard/app/controllers/favorite_controller.dart';
 import 'package:setup_wizard/app/controllers/game_info_controller.dart';
 import 'package:setup_wizard/app/models/argument.dart';
+import 'package:setup_wizard/app/services/favorite_service.dart';
 
 class GameInfoPage extends StatefulWidget {
-  const GameInfoPage({Key key}) : super(key: key);
+  final DocumentSnapshot document;
+  const GameInfoPage({Key key, this.document}) : super(key: key);
 
   @override
-  _GameInfoPageState createState() => _GameInfoPageState();
+  _GameInfoPageState createState() => _GameInfoPageState(this.document);
 }
 
 class _GameInfoPageState extends State<GameInfoPage> {
-  _GameInfoPageState();
-  Map<String, dynamic> fav;
-  Map<String, dynamic> favoriteItems = Map<String, dynamic>();
+  DocumentSnapshot document;
+  _GameInfoPageState(this.document);
+  Map<String, dynamic> favoriteMap = Map<String, dynamic>();
   List<DocumentReference> listDocument = List<DocumentReference>();
   List list = [];
 
@@ -30,10 +33,10 @@ class _GameInfoPageState extends State<GameInfoPage> {
 
   void favoriteData() {
     User firebaseUser = FirebaseAuth.instance.currentUser;
-    DocumentReference favoriteRef =
+    DocumentReference favoriteReference =
         FirebaseFirestore.instance.collection('favorite').doc(firebaseUser.uid);
-    favoriteRef.get().then((value) {
-      fav = value.data();
+    favoriteReference.get().then((value) {
+      favoriteMap = value.data();
       setState(() {});
     });
   }
@@ -41,7 +44,7 @@ class _GameInfoPageState extends State<GameInfoPage> {
   @override
   Widget build(BuildContext context) {
     final Argument _receivedArgument = ModalRoute.of(context).settings.arguments;
-    final DocumentSnapshot document = _receivedArgument.arguments[0];
+    //final DocumentSnapshot document = _receivedArgument.arguments[0];
     final List<String> listOfInfo = GameInfoController.instance.listOfInfoValidation(document: document);
 
     return Scaffold(
@@ -123,11 +126,15 @@ class _GameInfoPageState extends State<GameInfoPage> {
     );
   }
 
-  bool isFavorite(int index) =>
-      fav != null && fav.containsKey(index) ? true : false;
+  bool isFavorite(int id) {
+    MapEntry entry = favoriteMap.entries.firstWhere(
+            (element) => element.key == id.toString(),
+        orElse: () => null);
+    return entry != null ? entry.value : false;
+  }
 
-  Widget isFavoriteIcon(int index) {
-    if (isFavorite(index)) {
+  Widget isFavoriteIcon(int id) {
+    if (isFavorite(id)) {
       return Icon(
         Icons.favorite,
         color: Colors.red,
@@ -141,11 +148,11 @@ class _GameInfoPageState extends State<GameInfoPage> {
     }
   }
 
-  void favorite(int index) {
-    if (isFavorite(index)) {
-      Favorite.instance.removeItem(index);
+  void favorite(int id) {
+    if (isFavorite(id)) {
+      Favorite.instance.removeItem(id);
     } else {
-      Favorite.instance.storageFavoriteIntoFirestore(index);
+      Favorite.instance.storageFavoriteIntoFirestore(id);
     }
   }
 }
