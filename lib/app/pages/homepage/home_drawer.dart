@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/components/constants.dart';
+import 'package:setup_wizard/app/controllers/favorite_controller.dart';
 import 'package:setup_wizard/app/services/auth/auth.dart';
 
 class DrawerHome extends StatefulWidget {
@@ -18,6 +19,7 @@ void _logOut(BuildContext context) {
 }
 
 class _DrawerHomeState extends State<DrawerHome> {
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -32,7 +34,6 @@ class _DrawerHomeState extends State<DrawerHome> {
             Padding(
               padding: const EdgeInsets.only(left: 100),
               child: FlatButton(
-
                 splashColor: Colors.transparent,
                 padding: EdgeInsets.all(15),
                 onPressed: () => print("TAP"),
@@ -47,9 +48,9 @@ class _DrawerHomeState extends State<DrawerHome> {
             ),
             FlatButton(
               padding: EdgeInsets.only(top: 5, bottom: 5),
-              onPressed: () => null,
+              onPressed: () {},
               child: ListTile(
-                title: Text("My Saved Games"),
+                title: Text("My Favorite Games"),
                 leading: Icon(Icons.videogame_asset),
               ),
             ),
