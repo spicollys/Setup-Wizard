@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/components/constants.dart';
 import 'package:setup_wizard/app/components/custom_gradient_container_bluegrey.dart';
-import 'package:setup_wizard/app/controllers/favorite_controller.dart';
+import 'package:setup_wizard/app/services/favorite_service.dart';
 import 'package:setup_wizard/app/controllers/log_controller.dart';
 import 'package:setup_wizard/app/models/argument.dart';
 import 'package:setup_wizard/app/services/game_data_firebase_service.dart';
@@ -30,10 +30,10 @@ class _GameListPaginationPageState extends State<GameListPaginationPage> {
 
   Stream<List<DocumentSnapshot>> get _streamController => _controller.stream;
 
-  void favoriteData(){
+  void favoriteData() {
     User firebaseUser = FirebaseAuth.instance.currentUser;
     DocumentReference favoriteRef =
-    FirebaseFirestore.instance.collection('favorite').doc(firebaseUser.uid);
+        FirebaseFirestore.instance.collection('favorite').doc(firebaseUser.uid);
     favoriteRef.get().then((value) {
       fav = value.data();
       setState(() {});
@@ -142,10 +142,11 @@ class _GameListPaginationPageState extends State<GameListPaginationPage> {
                                   '${snapshot.data[index]['headerImage']}'),
                             ),
                             trailing: IconButton(
-                              icon: isFavoriteIcon(snapshot, index),
+                              icon: isFavoriteIcon(
+                                  snapshot.data[index]['documentId']),
                               onPressed: () {
                                 setState(() {
-                                  favorite(snapshot, index);
+                                  favorite(snapshot.data[index]['documentId']);
                                   favoriteData();
                                 });
                               },
@@ -174,23 +175,29 @@ class _GameListPaginationPageState extends State<GameListPaginationPage> {
     );
   }
 
-  bool isFavorite(AsyncSnapshot snapshot, int index) => fav != null && fav.containsKey(snapshot.data[index]['documentId'].toString()) ? true : false;
+  bool isFavorite(int id) {
+    MapEntry entry = fav.entries.firstWhere(
+        (element) => element.key == id.toString(),
+        orElse: () => null);
+    return entry != null ? entry.value : false;
+  }
 
-  Widget isFavoriteIcon(AsyncSnapshot snapshot, int index){
-    if (isFavorite(snapshot, index)){
-      return Icon(Icons.favorite, color: Colors.red,);
+  Widget isFavoriteIcon(int id) {
+    if (isFavorite(id)) {
+      return Icon(
+        Icons.favorite,
+        color: Colors.red,
+      );
     } else {
       return Icon(Icons.favorite_border);
     }
   }
 
-  void favorite (AsyncSnapshot snapshot, int index){
-    if(isFavorite(snapshot, index)){
-      Favorite.instance.removeItem(snapshot.data[index]['documentId']);
+  void favorite(int id) {
+    if (isFavorite(id)) {
+      Favorite.instance.removeItem(id);
     } else {
-      Favorite.instance
-          .storageFavoriteIntoFirestore(
-          snapshot.data[index]['documentId']);
+      Favorite.instance.storageFavoriteIntoFirestore(id);
     }
   }
 }

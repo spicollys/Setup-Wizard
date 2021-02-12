@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:setup_wizard/app/controllers/favorite_controller.dart';
+import 'package:setup_wizard/app/services/favorite_service.dart';
 import 'package:setup_wizard/app/interfaces/firebase_service_interface.dart';
 
 class GameDataFirebaseService implements IFirebaseService {

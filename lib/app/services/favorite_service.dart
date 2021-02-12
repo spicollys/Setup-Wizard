@@ -7,10 +7,7 @@ class Favorite {
   final CollectionReference favoriteCollection =
       FirebaseFirestore.instance.collection("favorite");
 
-  List<dynamic> list;
-
   static final Favorite instance = Favorite._();
-
   Favorite._();
 
   void storageFavoriteIntoFirestore(int id) {
@@ -32,6 +29,8 @@ class Favorite {
     await favoriteRef.get().then((value) {
       favoriteItems =  value.data();
     });
+    favoriteItems.removeWhere((key, value) => value == false);
+    print(favoriteItems);
     return favoriteItems;
   }
 
@@ -39,6 +38,6 @@ class Favorite {
     User firebaseUser = FirebaseAuth.instance.currentUser;
     favoriteCollection
         .doc(firebaseUser.uid)
-        .update({"$index": FieldValue.delete()});
+        .update({"$index": false});
   }
 }

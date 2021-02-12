@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/components/custom_gradient_container_bluegrey.dart';
-import 'package:setup_wizard/app/controllers/favorite_controller.dart';
+import 'package:setup_wizard/app/services/favorite_service.dart';
 import 'package:setup_wizard/app/models/argument.dart';
 
 class FavoritePage extends StatefulWidget {
