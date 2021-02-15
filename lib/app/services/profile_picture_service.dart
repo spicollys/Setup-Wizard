@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:setup_wizard/app/models/user_data.dart';
@@ -40,8 +41,9 @@ class ProfilePicture {
   }
 
   Future setImage(Function refreshState) async {
-    ProfilePicture.instance.userDocument =
-        await UserFirebaseService.instance.getUserData();
+    DocumentSnapshot documentSnapshot =
+        await UserFirebaseService.instance.get(id: _firebaseUser.uid);
+    ProfilePicture.instance.userDocument = documentSnapshot.data();
     ProfilePicture.instance.imageFirebase =
         ProfilePicture.instance.userDocument['profilePicture'];
     refreshState();
