@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:setup_wizard/app/interfaces/firebase_service_interface.dart';
 
 class UserFirebaseService implements IFirebaseService {
   final CollectionReference _userServiceCollection =
       IFirebaseService.firebaseInstance.collection('user');
+  final User _firebaseUser = FirebaseAuth.instance.currentUser;
 
   static final UserFirebaseService instance =
       UserFirebaseService._(); //singleton
@@ -25,5 +27,11 @@ class UserFirebaseService implements IFirebaseService {
   @override
   Future put({String id, value}) async {
     return await _userServiceCollection.doc(id).set(value);
+  }
+
+  Future<Map<String, dynamic>> getUserData() async {
+    DocumentSnapshot userSnapshot =
+    await UserFirebaseService.instance.get(id: _firebaseUser.uid);
+    return userSnapshot.data();
   }
 }
