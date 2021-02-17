@@ -20,7 +20,6 @@ class _GameListPaginationPageState extends State<GameListPaginationPage> {
   int documentLimit = 20;
   DocumentSnapshot lastDocument;
   ScrollController _scrollController = ScrollController();
-  Map<String, dynamic> favoriteMap = Map<String, dynamic>();
 
   StreamController<List<DocumentSnapshot>> _controller =
       StreamController<List<DocumentSnapshot>>();

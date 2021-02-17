@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:setup_wizard/app/controllers/game_genre_controller.dart';
 import 'package:setup_wizard/app/interfaces/general_controller_interface.dart';
 import 'package:setup_wizard/app/models/argument.dart';
 import 'constants.dart';
 
-class GeneralOptionGrid extends StatelessWidget {
-  final IFilterCategoryController controllerInstance;
-  GeneralOptionGrid({@required this.controllerInstance});
 
+class GeneralOptionGrid extends StatelessWidget {
+  IFilterCategoryController controllerInstance = GameGenreController.instance;
   @override
   Widget build(BuildContext context) {
     return GridView.count(
