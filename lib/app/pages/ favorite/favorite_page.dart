@@ -14,37 +14,39 @@ class _FavoritePageState extends State<FavoritePage> {
   User firebaseUser = FirebaseAuth.instance.currentUser;
   CollectionReference favoriteCollection =
       FirebaseFirestore.instance.collection("favorite");
-  List<dynamic> list = [];
   List<DocumentReference> listDocument = List<DocumentReference>();
-  Map<String, dynamic> favoriteItems = Map<String, dynamic>();
+  Map<String, dynamic> items = Map<String, dynamic>();
 
   @override
   void initState() {
-    Favorite.instance
-        .getFavoriteData()
-        .then((value) => setState(() => favoriteItems = value));
+    getFavoriteData();
     super.initState();
   }
 
-  void loadingList() {
-    list = favoriteItems.keys.toList();
-    list.forEach((index) {
-      listDocument.add(FirebaseFirestore.instance
-          .collection('steam-game-data')
-          .doc("$index"));
+  void getFavoriteData() {
+    User firebaseUser = FirebaseAuth.instance.currentUser;
+    DocumentReference favoriteRef =
+        FirebaseFirestore.instance.collection('favorite').doc(firebaseUser.uid);
+    favoriteRef.get().then((value) {
+      items = value.data();
+      setState(() {});
     });
   }
 
-  void removeFavoriteItem({int index, int id}) {
-    Favorite.instance.removeItem(id);
-    listDocument.removeAt(index);
+  void loadingList() {
+    listDocument = [];
+    var favoriteItems =
+        items.entries.where((element) => element.value != false);
+    favoriteItems.forEach((element) {
+      listDocument.add(FirebaseFirestore.instance
+          .collection('steam-game-data')
+          .doc("${element.key}"));
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (listDocument.isEmpty && favoriteItems != null) {
-      loadingList();
-    }
+    loadingList();
     return Scaffold(
         appBar:
             AppBar(title: Text("Favorite List"), leading: Icon(Icons.favorite)),
@@ -69,8 +71,11 @@ class _FavoritePageState extends State<FavoritePage> {
                     final Argument documentAsArgument =
                         Argument(arguments: [snapshot.data]);
                     return InkWell(
-                      onTap: () => Navigator.pushNamed(context, '/gameInfoPage',
-                          arguments: documentAsArgument),
+                      onTap: () async {
+                        await Navigator.pushNamed(context, '/gameInfoPage',
+                            arguments: documentAsArgument);
+                        getFavoriteData();
+                      },
                       child: Card(
                         elevation: 2.0,
                         child: ListTile(
@@ -85,9 +90,9 @@ class _FavoritePageState extends State<FavoritePage> {
                             ),
                             onPressed: () {
                               setState(() {
-                                removeFavoriteItem(
-                                    index: index,
-                                    id: snapshot.data['documentId']);
+                                Favorite.instance
+                                    .removeItem(snapshot.data['documentId']);
+                                getFavoriteData();
                               });
                             },
                           ),

@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +10,7 @@ import 'package:setup_wizard/app/services/favorite_service.dart';
 
 class GameInfoPage extends StatefulWidget {
   final DocumentSnapshot document;
+
   const GameInfoPage({Key key, this.document}) : super(key: key);
 
   @override
@@ -18,8 +18,10 @@ class GameInfoPage extends StatefulWidget {
 }
 
 class _GameInfoPageState extends State<GameInfoPage> {
-  DocumentSnapshot document;
+  var document;
+
   _GameInfoPageState(this.document);
+
   Map<String, dynamic> favoriteMap = Map<String, dynamic>();
   List<DocumentReference> listDocument = List<DocumentReference>();
   List list = [];
@@ -42,10 +44,13 @@ class _GameInfoPageState extends State<GameInfoPage> {
 
   @override
   Widget build(BuildContext context) {
+    final Argument args = ModalRoute.of(context).settings.arguments;
+    if (document != DocumentSnapshot) {
+      document = args.arguments[0];
+    }
 
-    final Argument _receivedArgument = ModalRoute.of(context).settings.arguments;
-    final List<String> listOfInfo = GameInfoController.instance.listOfInfoValidation(document: document);
-
+    List<String> listOfInfo =
+        GameInfoController.instance.listOfInfoValidation(document: document);
 
     return Scaffold(
       appBar: AppBar(
@@ -128,11 +133,10 @@ class _GameInfoPageState extends State<GameInfoPage> {
 
   bool isFavorite(int id) {
     MapEntry entry = favoriteMap.entries.firstWhere(
-            (element) => element.key == id.toString(),
+        (element) => element.key == id.toString(),
         orElse: () => null);
     return entry != null ? entry.value : false;
   }
-
 
   Widget isFavoriteIcon(int id) {
     if (isFavorite(id)) {

@@ -119,15 +119,14 @@ class _GameListPaginationPageState extends State<GameListPaginationPage> {
                     itemCount: snapshot.data.length,
                     controller: _scrollController,
                     itemBuilder: (_, index) {
+                      final Argument documentAsArgument =
+                          Argument(arguments: [snapshot.data[index]]);
                       return InkWell(
                         onTap: () async {
-                          await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => GameInfoPage(document: snapshot.data[index],)),
-                          );
+                          await Navigator.pushNamed(context, '/gameInfoPage',
+                              arguments: documentAsArgument);
                           getFavoriteData();
-                          },
+                        },
                         child: Card(
                           elevation: 2.0,
                           child: ListTile(
@@ -172,7 +171,7 @@ class _GameListPaginationPageState extends State<GameListPaginationPage> {
   void getFavoriteData() {
     User firebaseUser = FirebaseAuth.instance.currentUser;
     DocumentReference favoriteRef =
-    FirebaseFirestore.instance.collection('favorite').doc(firebaseUser.uid);
+        FirebaseFirestore.instance.collection('favorite').doc(firebaseUser.uid);
     favoriteRef.get().then((value) {
       favoriteMap = value.data();
       setState(() {});
