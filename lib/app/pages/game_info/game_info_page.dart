@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/components/custom_container_text.dart';
 import 'package:setup_wizard/app/components/custom_gradient_container_bluegrey.dart';
 import 'package:setup_wizard/app/controllers/expandable_text_conroller.dart';
+import 'package:setup_wizard/app/controllers/favorite_controller.dart';
 import 'package:setup_wizard/app/controllers/game_info_controller.dart';
 import 'package:setup_wizard/app/models/argument.dart';
 import 'package:setup_wizard/app/services/favorite_service.dart';
@@ -22,25 +23,13 @@ class _GameInfoPageState extends State<GameInfoPage> {
 
   _GameInfoPageState(this.document);
 
-  Map<String, dynamic> favoriteMap = Map<String, dynamic>();
-  List<DocumentReference> listDocument = List<DocumentReference>();
-  List list = [];
-
   @override
   void initState() {
-    favoriteData();
+    FavoriteController.instance.favoriteData(callBack);
     super.initState();
   }
 
-  void favoriteData() {
-    User firebaseUser = FirebaseAuth.instance.currentUser;
-    DocumentReference favoriteReference =
-        FirebaseFirestore.instance.collection('favorite').doc(firebaseUser.uid);
-    favoriteReference.get().then((value) {
-      favoriteMap = value.data();
-      setState(() {});
-    });
-  }
+  void callBack() => setState(() {});
 
   @override
   Widget build(BuildContext context) {
@@ -76,11 +65,14 @@ class _GameInfoPageState extends State<GameInfoPage> {
                       right: 10.0,
                       bottom: 10.0,
                       child: IconButton(
-                        icon: isFavoriteIcon(document['documentId']),
+                        icon: FavoriteController.instance
+                            .isFavoriteIcon(document['documentId']),
                         onPressed: () {
                           setState(() {
-                            favorite(document['documentId']);
-                            favoriteData();
+                            FavoriteController.instance
+                                .favorite(document['documentId']);
+                            // favoriteData();
+                            FavoriteController.instance.favoriteData(callBack);
                           });
                         },
                       ),
@@ -129,36 +121,5 @@ class _GameInfoPageState extends State<GameInfoPage> {
         ),
       ),
     );
-  }
-
-  bool isFavorite(int id) {
-    MapEntry entry = favoriteMap.entries.firstWhere(
-        (element) => element.key == id.toString(),
-        orElse: () => null);
-    return entry != null ? entry.value : false;
-  }
-
-  Widget isFavoriteIcon(int id) {
-    if (isFavorite(id)) {
-      return Icon(
-        Icons.favorite,
-        color: Colors.red,
-        size: 40.0,
-      );
-    } else {
-      return Icon(
-        Icons.favorite,
-        color: Colors.white,
-        size: 40.0,
-      );
-    }
-  }
-
-  void favorite(int id) {
-    if (isFavorite(id)) {
-      Favorite.instance.removeItem(id);
-    } else {
-      Favorite.instance.storageFavoriteIntoFirestore(id);
-    }
   }
 }

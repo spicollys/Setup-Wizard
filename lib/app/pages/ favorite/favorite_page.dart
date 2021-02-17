@@ -87,6 +87,7 @@ class _FavoritePageState extends State<FavoritePage> {
                             icon: Icon(
                               Icons.favorite,
                               color: Colors.red,
+                              size: 40,
                             ),
                             onPressed: () {
                               setState(() {

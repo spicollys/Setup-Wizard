@@ -1,15 +1,11 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:setup_wizard/app/components/constants.dart';
 import 'package:setup_wizard/app/components/custom_gradient_container_bluegrey.dart';
-import 'package:setup_wizard/app/pages/game_info/game_info_page.dart';
-import 'package:setup_wizard/app/services/favorite_service.dart';
+import 'package:setup_wizard/app/controllers/favorite_controller.dart';
 import 'package:setup_wizard/app/controllers/log_controller.dart';
 import 'package:setup_wizard/app/models/argument.dart';
 import 'package:setup_wizard/app/services/game_data_firebase_service.dart';
-import 'package:setup_wizard/app/services/user_firebase_service.dart';
 
 class GameListPaginationPage extends StatefulWidget {
   @override
@@ -31,9 +27,11 @@ class _GameListPaginationPageState extends State<GameListPaginationPage> {
 
   Stream<List<DocumentSnapshot>> get _streamController => _controller.stream;
 
+  void callBack() => setState(() {});
+
   @override
   void initState() {
-    getFavoriteData();
+    FavoriteController.instance.favoriteData(callBack);
 
     super.initState();
     collectionGameGenre = Future.delayed(Duration.zero, () {
@@ -125,7 +123,7 @@ class _GameListPaginationPageState extends State<GameListPaginationPage> {
                         onTap: () async {
                           await Navigator.pushNamed(context, '/gameInfoPage',
                               arguments: documentAsArgument);
-                          getFavoriteData();
+                          FavoriteController.instance.favoriteData(callBack);
                         },
                         child: Card(
                           elevation: 2.0,
@@ -135,12 +133,14 @@ class _GameListPaginationPageState extends State<GameListPaginationPage> {
                                   '${snapshot.data[index]['headerImage']}'),
                             ),
                             trailing: IconButton(
-                              icon: isFavoriteIcon(
+                              icon: FavoriteController.instance.isFavoriteIcon(
                                   snapshot.data[index]['documentId']),
                               onPressed: () {
                                 setState(() {
-                                  favorite(snapshot.data[index]['documentId']);
-                                  getFavoriteData();
+                                  FavoriteController.instance.favorite(
+                                      snapshot.data[index]['documentId']);
+                                  FavoriteController.instance
+                                      .favoriteData(callBack);
                                 });
                               },
                             ),
@@ -166,41 +166,5 @@ class _GameListPaginationPageState extends State<GameListPaginationPage> {
         },
       ),
     );
-  }
-
-  void getFavoriteData() {
-    User firebaseUser = FirebaseAuth.instance.currentUser;
-    DocumentReference favoriteRef =
-        FirebaseFirestore.instance.collection('favorite').doc(firebaseUser.uid);
-    favoriteRef.get().then((value) {
-      favoriteMap = value.data();
-      setState(() {});
-    });
-  }
-
-  bool isFavorite(int id) {
-    MapEntry entry = favoriteMap.entries.firstWhere(
-        (element) => element.key == id.toString(),
-        orElse: () => null);
-    return entry != null ? entry.value : false;
-  }
-
-  Widget isFavoriteIcon(int id) {
-    if (isFavorite(id)) {
-      return Icon(
-        Icons.favorite,
-        color: Colors.red,
-      );
-    } else {
-      return Icon(Icons.favorite_border);
-    }
-  }
-
-  void favorite(int id) {
-    if (isFavorite(id)) {
-      Favorite.instance.removeItem(id);
-    } else {
-      Favorite.instance.storageFavoriteIntoFirestore(id);
-    }
   }
 }
