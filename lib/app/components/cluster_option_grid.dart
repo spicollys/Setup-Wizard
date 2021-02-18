@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:setup_wizard/app/controllers/game_genre_controller.dart';
-import 'package:setup_wizard/app/interfaces/general_controller_interface.dart';
 import 'package:setup_wizard/app/models/argument.dart';
 import 'constants.dart';
 
-
+// ignore: must_be_immutable
 class ClusterOptionGrid extends StatelessWidget {
   List<String> _optionList = [
     "Cluster 0",
@@ -17,6 +15,7 @@ class ClusterOptionGrid extends StatelessWidget {
     "Cluster 6",
     "Cluster 7",
   ];
+
   @override
   Widget build(BuildContext context) {
     return GridView.count(
@@ -25,8 +24,7 @@ class ClusterOptionGrid extends StatelessWidget {
       shrinkWrap: true,
       crossAxisCount: 2,
       childAspectRatio: 2.5,
-      children:
-      List.generate(_optionList.length, (index) {
+      children: List.generate(_optionList.length, (index) {
         Argument _localArgument =
             Argument(arguments: [_optionList[index], index.toString()]);
         return Padding(

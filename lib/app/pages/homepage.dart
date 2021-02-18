@@ -1,6 +1,6 @@
 import 'package:setup_wizard/app/components/general_header_button.dart';
 
-import 'home_drawer.dart';
+import '../components/home_drawer.dart';
 import 'package:setup_wizard/app/components/constants.dart';
 import 'package:flutter/material.dart';
 

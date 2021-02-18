@@ -7,12 +7,12 @@ import 'package:setup_wizard/app/controllers/log_controller.dart';
 import 'package:setup_wizard/app/models/argument.dart';
 import 'package:setup_wizard/app/services/game_data_firebase_service.dart';
 
-class GameListPaginationPage extends StatefulWidget {
+class GameListPaginationGenrePage extends StatefulWidget {
   @override
-  _GameListPaginationPageState createState() => _GameListPaginationPageState();
+  _GameListPaginationGenrePageState createState() => _GameListPaginationGenrePageState();
 }
 
-class _GameListPaginationPageState extends State<GameListPaginationPage> {
+class _GameListPaginationGenrePageState extends State<GameListPaginationGenrePage> {
   Future<String> collectionGameGenre;
   List<DocumentSnapshot> documentList = [];
   bool isLoading = false;

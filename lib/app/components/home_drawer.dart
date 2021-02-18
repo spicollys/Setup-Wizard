@@ -1,15 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/components/constants.dart';
-import 'package:setup_wizard/app/models/user_data.dart';
-import 'package:setup_wizard/app/services/auth/auth.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:setup_wizard/app/services/firebase_storage.dart';
+import 'package:setup_wizard/app/services/auth.dart';
 import 'package:setup_wizard/app/services/profile_picture_service.dart';
-import 'package:setup_wizard/app/services/user_firebase_service.dart';
-import 'dart:io';
 
 class DrawerHome extends StatefulWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;

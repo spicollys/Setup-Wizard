@@ -1,17 +1,17 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:setup_wizard/app/pages/%20favorite/favorite_page.dart';
-import 'package:setup_wizard/app/pages/game_genre/game_genre_page.dart';
-import 'package:setup_wizard/app/pages/game_info/game_info_page.dart';
-import 'package:setup_wizard/app/pages/game_list_pagination/game_list_pagination_page.dart';
-import 'package:setup_wizard/app/pages/homepage/homepage.dart';
-import 'package:setup_wizard/app/pages/login/login_page.dart';
-import 'package:setup_wizard/app/pages/register/register_page.dart';
-import 'app/pages/game_cluster/game_cluster_page.dart';
-import 'app/pages/game_list_pagination/game_list_pagination_cluster.dart';
-import 'app/pages/game_list_pagination/game_list_pagination_page.dart';
-import 'app/pages/loading/loading_page.dart';
-import 'app/pages/reset_password/reset_password_page.dart';
+import 'package:setup_wizard/app/pages/favorite_page.dart';
+import 'package:setup_wizard/app/pages/game_genre_page.dart';
+import 'package:setup_wizard/app/pages/game_info_page.dart';
+import 'package:setup_wizard/app/pages/game_list_pagination_genre_page.dart';
+import 'package:setup_wizard/app/pages/homepage.dart';
+import 'package:setup_wizard/app/pages/login_page.dart';
+import 'package:setup_wizard/app/pages/register_page.dart';
+import 'app/pages/game_cluster_page.dart';
+import 'app/pages/game_list_pagination_cluster_page.dart';
+import 'app/pages/game_list_pagination_genre_page.dart';
+import 'app/pages/loading_page.dart';
+import 'app/pages/reset_password_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         initialRoute: '/homePage',
         routes: {
           '/gameGenrePage': (context) => GameGenrePage(),
-          '/gameListPaginationPage': (context) => GameListPaginationPage(),
+          '/gameListPaginationGenrePage': (context) => GameListPaginationGenrePage(),
           '/loginPage': (context) => LoginPage(),
           '/registerPage': (context) => RegisterPage(),
           '/loadingPage': (context) => LoadingPage(),

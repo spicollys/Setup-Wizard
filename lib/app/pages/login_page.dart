@@ -10,7 +10,7 @@ import 'package:setup_wizard/app/components/logo_setup_wizard.dart';
 import 'package:setup_wizard/app/components/text_field_container.dart';
 import 'package:setup_wizard/app/controllers/log_controller.dart';
 import 'package:setup_wizard/app/controllers/validation_controller.dart';
-import 'package:setup_wizard/app/services/auth/auth.dart';
+import 'package:setup_wizard/app/services/auth.dart';
 
 class LoginPage extends StatefulWidget {
   @override
