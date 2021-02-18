@@ -64,7 +64,6 @@ class _GameListPaginationClusterPageState extends State<GameListPaginationCluste
     });
     QuerySnapshot querySnapshot;
     if (lastDocument == null) {
-      print(cluster);
       querySnapshot = await GameDataFirebaseService.instance
           .getCollectionReferenceByCluster(cluster: cluster)
           .limit(documentLimit)
@@ -149,7 +148,7 @@ class _GameListPaginationClusterPageState extends State<GameListPaginationCluste
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             subtitle: Text(
-                                'Release date: ${snapshot.data[index]['Cluster']}'),
+                                'Release date: ${snapshot.data[index]['releaseDate']}'),
                           ),
                         ),
                       );
