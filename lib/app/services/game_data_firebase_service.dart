@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:setup_wizard/app/services/favorite_service.dart';
 import 'package:setup_wizard/app/interfaces/firebase_service_interface.dart';
 
 class GameDataFirebaseService implements IFirebaseService {
@@ -36,18 +35,14 @@ class GameDataFirebaseService implements IFirebaseService {
   CollectionReference getCollection() => _gameServiceCollection;
 
   Query getCollectionReferenceByGenre({@required String genre}) {
+    print(genre);
     return (genre == null)
         ? _gameServiceCollection
         : _gameServiceCollection.where(genre, isEqualTo: true);
   }
-
-  // List<Query> favoriteCollectionReference() {
-  //   Map<String, dynamic> favoriteItems = Favorite.instance.getFavoriteData() as Map<String, dynamic>;
-  //   List list = favoriteItems.keys.toList();
-  //   List<Query> listOfFavorite = List<Query>();
-  //   list.forEach((element) {
-  //     listOfFavorite.add(_gameServiceCollection.where('documentId', isEqualTo: element));
-  //   });
-  //   return listOfFavorite;
-  // }
+  Query getCollectionReferenceByCluster({@required String cluster}) {
+    return (cluster == null)
+        ? _gameServiceCollection
+        : _gameServiceCollection.where('clusters', isEqualTo: cluster);
+  }
 }

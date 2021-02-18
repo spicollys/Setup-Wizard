@@ -7,6 +7,8 @@ import 'package:setup_wizard/app/pages/game_list_pagination/game_list_pagination
 import 'package:setup_wizard/app/pages/homepage/homepage.dart';
 import 'package:setup_wizard/app/pages/login/login_page.dart';
 import 'package:setup_wizard/app/pages/register/register_page.dart';
+import 'app/pages/game_cluster/game_cluster_page.dart';
+import 'app/pages/game_list_pagination/game_list_pagination_cluster.dart';
 import 'app/pages/game_list_pagination/game_list_pagination_page.dart';
 import 'app/pages/loading/loading_page.dart';
 import 'app/pages/reset_password/reset_password_page.dart';
@@ -39,6 +41,8 @@ class MyApp extends StatelessWidget {
           '/gameInfoPage': (context) => GameInfoPage(),
           '/homePage': (context) => HomePage(),
           '/favoritePage': (context) => FavoritePage(),
+          '/gameClusterPage': (context) => GameClusterPage(),
+          '/gameListPaginationClusterPage': (context) => GameListPaginationClusterPage(),
           '/hardwareCategoryPage': (context) => null,
         });
   }

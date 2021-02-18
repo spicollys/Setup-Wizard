@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:setup_wizard/app/components/cluster_option_grid.dart';
 import 'package:setup_wizard/app/components/constants.dart';
 import 'package:setup_wizard/app/components/genre_option_grid.dart';
 import 'package:setup_wizard/app/components/general_header_button.dart';
 import 'package:setup_wizard/app/controllers/game_genre_controller.dart';
 
-class GameGenrePage extends StatelessWidget {
+class GameClusterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,8 +20,8 @@ class GameGenrePage extends StatelessWidget {
           shrinkWrap: true,
           children: <Widget>[
             GeneralHeaderButton(
-                title: 'All Game'.toUpperCase(), route: '/gameListPaginationPage'),
-            GenreOptionGrid(),
+                title: 'No Cluster'.toUpperCase(), route: '/gameListPaginationPage'),
+            ClusterOptionGrid(),
           ],
         ),
       ),
