@@ -66,12 +66,12 @@ class UpdateFirestoreData extends StatelessWidget{
   Future<void> storageDataIntoFirestore() async {
     final Map parsedJson = await parseJson();
 
-    for (var i = 0; i < 12634; i++){
+    for (var i = 9000; i < 12634; i++){
       var currentLine = parsedJson["$i"];
-      if(currentLine != null){
+      if(currentLine == null){
         print(i);
         firestoreCollection.doc("$i").update({
-          "Cluster": "${currentLine["clusters"]}",
+          "Cluster": null,
         });
       }
     }
