@@ -42,7 +42,7 @@ class GameDataFirebaseService implements IFirebaseService {
   }
   Query getCollectionReferenceByCluster({@required String cluster}) {
     return (cluster == null)
-        ? _gameServiceCollection
-        : _gameServiceCollection.where('clusters', isEqualTo: cluster);
+        ? _gameServiceCollection.where('Cluster', isNull: true)
+        : _gameServiceCollection.where('Cluster', isEqualTo: cluster);
   }
 }

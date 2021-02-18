@@ -69,7 +69,6 @@ class _GameListPaginationClusterPageState extends State<GameListPaginationCluste
           .getCollectionReferenceByCluster(cluster: cluster)
           .limit(documentLimit)
           .get();
-      print(querySnapshot.docs);
     } else {
       LogController.logInfo('Limit reached, loading more 20 items...');
       querySnapshot = await GameDataFirebaseService.instance
@@ -150,7 +149,7 @@ class _GameListPaginationClusterPageState extends State<GameListPaginationCluste
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             subtitle: Text(
-                                'Release date: ${snapshot.data[index]['releaseDate']}'),
+                                'Release date: ${snapshot.data[index]['Cluster']}'),
                           ),
                         ),
                       );

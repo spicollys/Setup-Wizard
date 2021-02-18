@@ -20,7 +20,7 @@ class GameClusterPage extends StatelessWidget {
           shrinkWrap: true,
           children: <Widget>[
             GeneralHeaderButton(
-                title: 'No Cluster'.toUpperCase(), route: '/gameListPaginationPage'),
+                title: 'No Cluster'.toUpperCase(), route: '/gameListPaginationClusterPage'),
             ClusterOptionGrid(),
           ],
         ),
