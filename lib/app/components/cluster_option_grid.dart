@@ -6,14 +6,14 @@ import 'constants.dart';
 // ignore: must_be_immutable
 class ClusterOptionGrid extends StatelessWidget {
   List<String> _optionList = [
-    "Cluster 0",
-    "Cluster 1",
-    "Cluster 2",
-    "Cluster 3",
-    "Cluster 4",
-    "Cluster 5",
-    "Cluster 6",
-    "Cluster 7",
+    "Explore",
+    "Dispersion",
+    "Old Ones",
+    "Dynamism",
+    "Family",
+    "Nerd",
+    "Balance",
+    "New Gen",
   ];
 
   @override

@@ -9,7 +9,7 @@ class GameClusterPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Constants.blueGrey100,
-        title: Text("Game Clusters"),
+        title: Text("Managers Suggestions"),
         leading: Icon(Icons.videogame_asset),
       ),
       body: Container(
@@ -18,7 +18,7 @@ class GameClusterPage extends StatelessWidget {
           shrinkWrap: true,
           children: <Widget>[
             GeneralHeaderButton(
-                title: 'No Cluster'.toUpperCase(), route: '/gameListPaginationClusterPage'),
+                title: 'Void'.toUpperCase(), route: '/gameListPaginationClusterPage'),
             ClusterOptionGrid(),
           ],
         ),

@@ -26,7 +26,7 @@ class GenreOptionGrid extends StatelessWidget {
             ),
             color: Constants.blueGrey600,
             onPressed: () => Navigator.pushNamed(
-                context, '/gameListPaginationPage',
+                context, '/gameListPaginationGenrePage',
                 arguments: _localArgument),
             child: FittedBox(
               fit: BoxFit.fitHeight,

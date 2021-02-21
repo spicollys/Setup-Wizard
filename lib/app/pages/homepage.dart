@@ -1,4 +1,5 @@
 import 'package:setup_wizard/app/components/general_header_button.dart';
+import 'package:setup_wizard/app/components/hardware_container_button.dart';
 
 import '../components/home_drawer.dart';
 import 'package:setup_wizard/app/components/constants.dart';
@@ -35,10 +36,8 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   GeneralHeaderButton(
                       title: 'Game Categories'.toUpperCase(), route: '/gameGenrePage'),
-                  GeneralHeaderButton(
-                      title: 'Hardware Categories'.toUpperCase(),
-                      route: '/hardwareCategoryPage'),
-                  GeneralHeaderButton(title: 'Game Cluster'.toUpperCase(), route: '/gameClusterPage')
+                  HardwareContainerButton(),
+                  GeneralHeaderButton(title: 'Managers Suggestions'.toUpperCase(), route: '/gameClusterPage')
                 ],
               ),
               decoration: BoxDecoration(

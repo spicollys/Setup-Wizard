@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:setup_wizard/app/components/constants.dart';
+import 'package:setup_wizard/app/components/custom_flushbar.dart';
 import 'package:setup_wizard/app/components/custom_gradient_container_grey.dart';
 import 'package:setup_wizard/app/components/custom_submit_button.dart';
 import 'package:setup_wizard/app/components/logo_setup_wizard.dart';
@@ -13,7 +14,11 @@ class ResetPasswordPage extends StatefulWidget {
 }
 
 class _ResetPasswordPageState extends State<ResetPasswordPage> {
-  String _email;
+  final _email = TextEditingController();
+
+  void clearText() {
+    _email.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +31,13 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
               TextFieldContainer(
                 child: TextFormField(
                   validator: ValidationController.emailValidator,
-                  onChanged: (String email) => _email = email,
+                  controller: _email,
                   keyboardType: TextInputType.emailAddress,
                   style: TextStyle(color: Constants.white),
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.symmetric(vertical: 11),
-                    errorStyle: TextStyle(
-                        height: 0.05, color: Constants.yellow700),
+                    errorStyle:
+                        TextStyle(height: 0.05, color: Constants.yellow700),
                     icon: Icon(
                       Icons.mail,
                       color: Constants.white,
@@ -43,8 +48,17 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                   ),
                 ),
               ),
-              CustomSubmitButton(title: 'enviar', onPressed: () => Auth.instance.resetPassword(_email)),
-              Text("Check the receipt of the message in your email box", style: TextStyle(color: Constants.white),),
+              CustomSubmitButton(
+                  title: 'enviar',
+                  onPressed: () {
+                    Auth.instance.resetPassword(_email.text);
+                    clearText();
+                    CustomFlushBar.show(context: context, title: "Email enviado com sucesso", message: "");
+                  }),
+              Text(
+                "Check the receipt of the message in your email box",
+                style: TextStyle(color: Constants.white),
+              ),
             ],
           ),
         ),
